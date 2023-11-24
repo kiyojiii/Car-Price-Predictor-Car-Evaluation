@@ -1,0 +1,394 @@
+{% extends "base.html" %}
+{% block body %}
+
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="index3.html" class="brand-link">
+        <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+            style="opacity: .8">
+        <span class="brand-text font-weight-light">GulongGulo</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+            </div>
+            <div class="info">
+                <a href="#" class="d-block">Alexander Pierce</a>
+            </div>
+        </div>
+
+        <!-- SidebarSearch Form -->
+        <div class="form-inline">
+            <div class="input-group" data-widget="sidebar-search">
+                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
+                    <button class="btn btn-sidebar">
+                        <i class="fas fa-search fa-fw"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+                <li class="nav-item">
+                    <a href="{{ url_for('dashboard') }}" class="nav-link">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Dashboard
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('pricepredict') }}" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Car Price Predictor
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('evaluatepredict') }}" class="nav-link active">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Car Evaluator
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            Layout Options
+                            <i class="fas fa-angle-left right"></i>
+                            <span class="badge badge-info right">6</span>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ url_for('evaluatepredict') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Car Evaluator</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Top Navigation + Sidebar</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/layout/boxed.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Boxed</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/layout/fixed-sidebar.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Fixed Sidebar</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/layout/fixed-sidebar-custom.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Fixed Sidebar <small>+ Custom Area</small></p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/layout/fixed-topnav.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Fixed Navbar</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/layout/fixed-footer.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Fixed Footer</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="pages/layout/collapsed-sidebar.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Collapsed Sidebar</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Car Safety Evaluation Predictor</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Car Safety Evaluation Predictor</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-6">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Car Safety Evaluation Details</h3>
+                        </div>
+                        <form action="{{ url_for('evaluate')}}" method="post">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="buying_price">Buying Price</label>
+                                            <select class="form-control" name="Buying Price" id="Buying Price"
+                                                required="required">
+                                                <option value="0">0 - Low</option>
+                                                <option value="1">1 - Medium</option>
+                                                <option value="2">2 - High</option>
+                                                <option value="3">3 - Very High</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="maintenance_cost">Maintenance Cost</label>
+                                            <select class="form-control" name="Maintenance Cost" id="Maintenance Cost"
+                                                required="required">
+                                                <option value="0">0 - Low</option>
+                                                <option value="1">1 - Medium</option>
+                                                <option value="2">2 - High</option>
+                                                <option value="3">3 - Very High</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="num_doors">Number of Doors</label>
+                                            <select class="form-control" name="Number of Doors" id="Number of Doors"
+                                                required="required">
+                                                <option value="0">0 - Door</option>
+                                                <option value="1">1 - Door</option>
+                                                <option value="2">2 - Doors</option>
+                                                <option value="3">3 - Doors</option>
+                                                <option value="4">4 - Doors</option>
+                                                <option value="5">5 or more - Doors</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="num_persons">Number of Persons</label>
+                                            <select class="form-control" name="Number of Persons" id="Number of Persons"
+                                                required="required">
+                                                <option value="0">0 - Person</option>
+                                                <option value="1">1 - Person</option>
+                                                <option value="2">2 - Persons</option>
+                                                <option value="3">3 - Persons</option>
+                                                <option value="4">4 - Persons</option>
+                                                <option value="5">5 or more - Persons</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="lug_boot">Lug Boot</label>
+                                            <select class="form-control" name="Lug_Boot" id="Lug_Boot"
+                                                required="required">
+                                                <option value="0">0 - Small</option>
+                                                <option value="1">1 - Medium</option>
+                                                <option value="2">2 - Big</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="safety">Safety</label>
+                                            <select class="form-control" name="Safety" id="Safety" required="required">
+                                                <option value="0">0 - Low</option>
+                                                <option value="1">1 - Medium</option>
+                                                <option value="2">2 - High</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                            <div class="text-center">
+                                <h4>The Car Evaluated can be:</h4>
+                                <h5>Accepted or Unaccepted</h5>
+                            </div>
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">Predict</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.card -->
+
+                </div>
+                <!--/.col (left) -->
+                <!-- right column -->
+                <div class="col-md-6">
+                    <!-- Form Element sizes -->
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Results</h3>
+                        </div>
+                        <form action="{{ url_for('add_to_database') }}" method="POST">
+                            {% if prediction_text %}
+
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="buying_price">Buying Price</label>
+                                            {% set buying_price_mapping = {'vhigh': 'vhigh', 'high': 'high', 'med': 'med', 'low': 'Low'} %}
+                                            {% set buying_price_value = request.form['Buying Price'] %}
+                                            {% if buying_price_value == '0' %}
+                                                {% set buying_price = buying_price_mapping['low'] %}
+                                            {% elif buying_price_value == '1' %}
+                                                {% set buying_price = buying_price_mapping['med'] %}
+                                            {% elif buying_price_value == '2' %}
+                                                {% set buying_price = buying_price_mapping['high'] %}
+                                            {% elif buying_price_value == '3' %}
+                                                {% set buying_price = buying_price_mapping['vhigh'] %}
+                                            {% else %}
+                                                {% set buying_price = buying_price_value %}
+                                            {% endif %}
+                                            <input type="text" class="form-control" id="buying_price" name="buying_price" value="{{ buying_price }}" readonly>
+                                        </div>
+                                        
+                                                                                                  
+                                        <div class="form-group">
+                                            <label for="maintenance_cost">Maintenance Cost</label>
+                                            {% set maintenance_cost_mapping = {'vhigh': 'vhigh', 'high': 'high', 'med': 'med', 'low': 'Low'} %}
+                                            {% set maintenance_cost_value = request.form['Maintenance Cost'] %}
+                                            {% if maintenance_cost_value == '0' %}
+                                                {% set maintenance_cost = maintenance_cost_mapping['low'] %}
+                                            {% elif maintenance_cost_value == '1' %}
+                                                {% set maintenance_cost = maintenance_cost_mapping['med'] %}
+                                            {% elif maintenance_cost_value == '2' %}
+                                                {% set maintenance_cost = maintenance_cost_mapping['high'] %}
+                                            {% elif maintenance_cost_value == '3' %}
+                                                {% set maintenance_cost = maintenance_cost_mapping['vhigh'] %}
+                                            {% else %}
+                                                {% set maintenance_cost = maintenance_cost_value %}
+                                            {% endif %}
+                                            <input type="text" class="form-control" id="maintenance_cost" name="maintenance_cost" value="{{ maintenance_cost }}" readonly>
+                                        </div>
+                                        
+
+                                        <div class="form-group">
+                                            <label for="num_doors">Number of Doors</label>
+                                            <input type="text" class="form-control" id="num_doors" name="num_doors"
+                                                value="{{ request.form['Number of Doors'] }}" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="num_persons">Number of Persons</label>
+                                            <input type="text" class="form-control" id="num_persons" name="num_persons"
+                                                value="{{ request.form['Number of Persons'] }}" readonly>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="lug_boot">Lug Boot</label>
+                                            {% set lug_boot_mapping = {'big': 'big', 'med': 'med', 'small': 'small'} %}
+                                            {% set lug_boot_value = request.form['Lug_Boot'] %}
+                                            {% if lug_boot_value == '0' %}
+                                                {% set lug_boot = lug_boot_mapping['small'] %}
+                                            {% elif lug_boot_value == '1' %}
+                                                {% set lug_boot = lug_boot_mapping['med'] %}
+                                            {% elif lug_boot_value == '2' %}
+                                                {% set lug_boot = lug_boot_mapping['big'] %}
+                                            {% else %}
+                                                {% set lug_boot = lug_boot_value %}
+                                            {% endif %}
+                                            <input type="text" class="form-control" id="lug_boot" name="lug_boot" value="{{ lug_boot }}" readonly>
+                                        </div>
+                                        
+
+                                        <div class="form-group">
+                                            <label for="safety">Safety</label>
+                                            {% set safety_mapping = {'high': 'high', 'med': 'med', 'low': 'low'} %}
+                                            {% set safety_value = request.form['Safety'] %}
+                                            {% if safety_value == '0' %}
+                                                {% set safety = safety_mapping['low'] %}
+                                            {% elif safety_value == '1' %}
+                                                {% set safety = safety_mapping['med'] %}
+                                            {% elif safety_value == '2' %}
+                                                {% set safety = safety_mapping['high'] %}
+                                            {% else %}
+                                                {% set safety = safety_value %}
+                                            {% endif %}
+                                            <input type="text" class="form-control" id="safety" name="safety" value="{{ safety }}" readonly>
+                                        </div>
+                                        
+                                        <!-- Add a hidden input for prediction_text -->
+                                        <input type="hidden" name="prediction_text" value="{{ prediction_text }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                            <div class="text-center">
+                                <h4>The Car Evaluated is :</h4>
+                                <h5 style="color: {{ '#27FF00' if prediction_text == 'Accepted' else '#FF0000' }}">{{prediction_text }}</h5>
+                            </div>
+                            {% endif %}
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary" id="addToDatabaseBtn">Add To Database</button>
+                            </div>
+                        </form>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                // Add a click event listener to the "Add To Database" button
+                                document.getElementById('addToDatabaseBtn').addEventListener('click', function () {
+                                    // Introduce a delay of 3000 milliseconds (3 seconds) before showing the SweetAlert
+                                    setTimeout(showSuccessAlert, 3000);
+                                });
+                        
+                                // Function to show a success SweetAlert
+                                function showSuccessAlert() {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Success!',
+                                        text: 'The data has been added to the database.',
+                                    });
+                                }
+                            });
+                        </script>
+                        
+                    </div>
+                </div>
+                <!--/.col (right) -->
+            </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+{% endblock %}
