@@ -104,6 +104,37 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('dashboard'))
 
+# SAFETY TABLES
+@app.route('/safety_table')
+def safety_table():
+    # Fetch data from MySQL database
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM car_evaluation")
+    data = cur.fetchall()
+
+    # Print the data for debugging
+    # for row in data:
+    #     print(row)
+
+    return render_template("safety_table.html", data=data)
+
+# PRICE TABLES
+@app.route('/price_table')
+def price_table():
+    # Fetch data from MySQL database
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT id, company, name, transmission, year, fuel_type, kms_driven, Price FROM car_price")
+    data = cur.fetchall()
+
+    # Print the data for debugging
+    # for row in data:
+    #     print(row)
+
+    # Pass data to the template
+    return render_template("price_table.html", data=data)
+
+
+
 # CAR EVALUATOR
 @app.route("/evaluatepredict")
 def evaluatepredict():
@@ -153,21 +184,48 @@ def pricepredict():
     return render_template('pricepredict.html',companies=companies, car_models=car_models, years=year,fuel_types=fuel_type)
 
 
-@app.route('/predict',methods=['POST'])
+@app.route('/predict', methods=['POST'])
 @cross_origin()
 def predict():
+    companies = sorted(car['company'].unique())
+    car_models = sorted(car['name'].unique())
+    year = sorted(car['year'].unique(), reverse=True)
+    fuel_type = car['fuel_type'].unique()
 
-    company=request.form.get('company')
-    car_model=request.form.get('car_models')
-    year=request.form.get('year')
-    fuel_type=request.form.get('fuel_type')
-    driven=request.form.get('kilo_driven')
-    
-    prediction=model.predict(pd.DataFrame(columns=['name', 'company', 'year', 'kms_driven', 'fuel_type'],
-                              data=np.array([car_model,company,year,driven,fuel_type]).reshape(1, 5)))
+    companies.insert(0, 'Select Company')
+
+    company = request.form.get('company')
+    car_model = request.form.get('car_models')
+    year_input = request.form.get('year')
+    fuel_type_input = request.form.get('fuel_type')
+    driven = request.form.get('kilo_driven')
+
+    prediction = model.predict(pd.DataFrame(columns=['name', 'company', 'year', 'kms_driven', 'fuel_type'], data=np.array([car_model, company, year_input, driven, fuel_type_input]).reshape(1, 5)))
     print(prediction)
 
-    return str(np.round(prediction[0],2))
+    return render_template("pricepredict.html", rounded_prediction=str(np.round(prediction[0], 2)),
+                           companies=companies, car_models=car_models, years=year, fuel_types=fuel_type,
+                           selected_company=company, selected_car_model=car_model,
+                           selected_year=year_input, selected_fuel_type=fuel_type_input, mileage=driven)
+
+@app.route('/add_price', methods=['GET','POST'])
+def add_price():
+    if request.method == 'POST':
+        company = request.form['company']
+        model = request.form['model']
+        transmission = request.form['transmission']
+        year = request.form['year']
+        fuel_type = request.form['fuel_type']
+        mileage = request.form['mileage']
+        price = request.form['rounded_prediction']
+   
+        cur = mysql.connection.cursor()
+        # Create a new CarData instance
+        cur.execute("INSERT INTO car_price (company, name, transmission, year, fuel_type, kms_driven, Price) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+                    (company, model, transmission, year, fuel_type, mileage, price))
+        mysql.connection.commit()
+
+    return redirect(url_for('pricepredict'))
 
 
 

@@ -263,7 +263,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="buying_price">Buying Price</label>
-                                            {% set buying_price_mapping = {'vhigh': 'vhigh', 'high': 'high', 'med': 'med', 'low': 'Low'} %}
+                                            {% set buying_price_mapping = {'vhigh': 'vhigh', 'high': 'high', 'med': 'med', 'low': 'low'} %}
                                             {% set buying_price_value = request.form['Buying Price'] %}
                                             {% if buying_price_value == '0' %}
                                                 {% set buying_price = buying_price_mapping['low'] %}
@@ -282,7 +282,7 @@
                                                                                                   
                                         <div class="form-group">
                                             <label for="maintenance_cost">Maintenance Cost</label>
-                                            {% set maintenance_cost_mapping = {'vhigh': 'vhigh', 'high': 'high', 'med': 'med', 'low': 'Low'} %}
+                                            {% set maintenance_cost_mapping = {'vhigh': 'vhigh', 'high': 'high', 'med': 'med', 'low': 'low'} %}
                                             {% set maintenance_cost_value = request.form['Maintenance Cost'] %}
                                             {% if maintenance_cost_value == '0' %}
                                                 {% set maintenance_cost = maintenance_cost_mapping['low'] %}
@@ -363,23 +363,19 @@
                         </form>
                         <script>
                             document.addEventListener('DOMContentLoaded', function () {
-                                // Add a click event listener to the "Add To Database" button
                                 document.getElementById('addToDatabaseBtn').addEventListener('click', function () {
-                                    // Introduce a delay of 3000 milliseconds (3 seconds) before showing the SweetAlert
-                                    setTimeout(showSuccessAlert, 3000);
+                                    showSuccessAlert();
                                 });
                         
-                                // Function to show a success SweetAlert
                                 function showSuccessAlert() {
                                     Swal.fire({
                                         icon: 'success',
                                         title: 'Success!',
-                                        text: 'The data has been added to the database.',
+                                        text: 'The results have been added to the database.',
                                     });
                                 }
                             });
                         </script>
-                        
                     </div>
                 </div>
                 <!--/.col (right) -->
