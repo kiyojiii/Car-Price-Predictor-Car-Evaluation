@@ -1,0 +1,278 @@
+{% extends "base.html" %}
+{% block body %}
+
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="index3.html" class="brand-link">
+      <img src="{{ url_for('static',filename='assets/img/favicon.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <h4><span class="brand-text font-weight-light">&nbsp;&nbsp;GuPa</h4>
+    </a>
+  
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="{{ url_for('static', filename='assets/img/user.png') }}" class="img-circle elevation-2"
+              alt="User Image" style="width: 40px; height: 40px;">
+        </div>    
+        <div class="info">
+          <h5>&nbsp;&nbsp;{{ first_name }} {{ last_name }}</h5>
+        </div>
+      </div>
+  
+      <!-- SidebarSearch Form -->
+      <div class="form-inline">
+        <div class="input-group" data-widget="sidebar-search">
+          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-sidebar">
+              <i class="fas fa-search fa-fw"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-item">
+                <a href="{{ url_for('dashboard') }}" class="nav-link">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Dashboard
+                </p>
+                </a>
+            </li>
+          <li class="nav-item">
+            <a href="{{ url_for('pricepredict') }}" class="nav-link">
+              <i class="nav-icon fa-solid fa-peso-sign"></i>
+              <p>
+                Car Price Predictor
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ url_for('evaluatepredict') }}" class="nav-link">
+              <i class="nav-icon fa-regular fa-circle-check"></i>
+              <p>
+                Car Evaluator
+              </p>
+            </a>
+          </li>
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa-solid fa-table"></i>
+              <p>
+                Tables
+                <i class="fas fa-angle-left right"></i>
+                <!-- <span class="badge badge-info right">6</span> -->
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ url_for('price_table') }}" class="nav-link">
+                  <i class="nav-icon fa-solid fa-car"></i>
+                  <p>Car Price Tables</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ url_for('safety_table') }}" class="nav-link active">
+                  <i class="nav-icon fa-solid fa-list-check"></i>
+                  <p>Car Evaluation Tables</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="{{ url_for('train_model') }}" class="nav-link">
+              <i class="nav-icon fa-solid fa-dumbbell"></i>
+              <p>
+                Train Model
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa-solid fa-chart-pie"></i>
+              <p>
+                Charts
+                <i class="fas fa-angle-left right"></i>
+                <!-- <span class="badge badge-info right">6</span> -->
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ url_for('price_charts') }}" class="nav-link">
+                  <i class="nav-icon fa-solid fa-chart-simple"></i>
+                  <p>Car Price Charts</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ url_for('evaluation_charts') }}" class="nav-link">
+                  <i class="nav-icon fa-solid fa-chart-area"></i>
+                  <p>Car Evaluation Charts</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="{{ url_for('logout') }}" class="nav-link">
+                <i class=" nav-icon fa-solid fa-right-from-bracket"></i>
+              <p>
+                Logout
+              </p>
+            </a>
+          </li>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Car Price Predictor</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Car Safety Evaluation</li>
+                        <li class="breadcrumb-item active">Add Car Evaluation</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-12 mx-auto">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h2 class="card-title">Add Car Safety Details</h2>
+                        </div>
+                        <form action="add_evaluation" method="post">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="buying_price">Buying Price</label>
+                                            <select class="form-control" name="buying_price" id="buying_price"
+                                            required="required">
+                                            <option value="low">0 - Low</option>
+                                            <option value="med">1 - Medium</option>
+                                            <option value="high">2 - High</option>
+                                            <option value="vhigh">3 - Very High</option>
+                                        </select>
+                                        </div>
+                                 
+                                              
+                                        <div class="form-group">
+                                            <label for="maintenance_cost">Maintenance Cost</label>
+                                            <select class="form-control" name="maintenance_cost" id="maintenance_cost"
+                                            required="required">
+                                            <option value="low">0 - Low</option>
+                                            <option value="med">1 - Medium</option>
+                                            <option value="high">2 - High</option>
+                                            <option value="vhigh">3 - Very High</option>
+                                        </select>
+                                        </div>     
+
+                                               
+                                        <div class="form-group">
+                                            <label for="num_doors">Number of Doors</label>
+                                            <select class="form-control" name="num_doors" id="num_doors"
+                                                required="required">
+                                                <option value="0">0 - Door</option>
+                                                <option value="1">1 - Door</option>
+                                                <option value="2">2 - Doors</option>
+                                                <option value="3">3 - Doors</option>
+                                                <option value="4">4 - Doors</option>
+                                                <option value="5">5 or more - Doors</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+
+                                        <div class="form-group">
+                                            <label for="num_persons">Number of Persons</label>
+                                            <select class="form-control" name="num_persons" id="num_persons"
+                                                required="required">
+                                                <option value="0">0 - Person</option>
+                                                <option value="1">1 - Person</option>
+                                                <option value="2">2 - Persons</option>
+                                                <option value="3">3 - Persons</option>
+                                                <option value="4">4 - Persons</option>
+                                                <option value="5">5 or more - Persons</option>
+                                            </select>
+                                        </div>
+                                                                                  
+                                        <div class="form-group">
+                                            <label for="lug_boot">Lug_Boot</label>
+                                            <select class="form-control" name="lug_boot" id="lug_boot"
+                                                required="required">
+                                                <option value="small">0 - Small</option>
+                                                <option value="med">1 - Medium</option>
+                                                <option value="big">2 - Big</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="safety">Safety</label>
+                                            <select class="form-control" name="safety" id="safety" required="required">
+                                                <option value="low">0 - Low</option>
+                                                <option value="med">1 - Medium</option>
+                                                <option value="high">2 - High</option>
+                                            </select>
+                                        </div>
+                                        
+
+                                        <div class="text-center">
+                                            <label><b>Classification</b> </label><br>
+                                            <select class="form-control" name="classification" id="classification" required="required">
+                                                <option value="0">0 - Unaccepted</option>
+                                                <option value="1">1 - Accepted</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary" id="addToDatabasePriceBtn">Add Car Evaluation</button>
+                                <a href="{{ url_for('safety_table')}}" class="btn btn-danger float-right">Back</a>
+                            </div>
+                        </form>
+                    </div>                                         
+                    <!-- /.card -->
+
+                </div>
+
+                <!-- right column -->
+                <!-- Add these input elements in your pricepredict.html template -->
+                <!--/.col (right) -->
+            </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+{% endblock %}

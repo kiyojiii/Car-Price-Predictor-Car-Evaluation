@@ -1,11 +1,16 @@
 {% extends "base.html" %}
 {% block body %}
+
+<div class="preloader flex-column justify-content-center align-items-center">
+  <img class="animation__wobble" src="{{ url_for('static',filename='assets/img/favicon.png') }}" alt="AdminLTELogo" height="60" width="60">
+</div>
+
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
   <a href="index3.html" class="brand-link">
-    <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-    <span class="brand-text font-weight-light">GulongGulo</span>
+    <img src="{{ url_for('static',filename='assets/img/favicon.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+    <h4><span class="brand-text font-weight-light">&nbsp;&nbsp;GuPa</h4>
   </a>
 
   <!-- Sidebar -->
@@ -13,10 +18,11 @@
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <div class="image">
-        <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-      </div>
+        <img src="{{ url_for('static', filename='assets/img/user.png') }}" class="img-circle elevation-2"
+            alt="User Image" style="width: 40px; height: 40px;">
+      </div>    
       <div class="info">
-        <a href="#" class="d-block">Alexander Pierce</a>
+        <h5>&nbsp;&nbsp;{{ first_name }} {{ last_name }}</h5>
       </div>
     </div>
 
@@ -47,7 +53,7 @@
           </li>
         <li class="nav-item">
           <a href="{{ url_for('pricepredict') }}" class="nav-link">
-            <i class="nav-icon fas fa-th"></i>
+            <i class="nav-icon fa-solid fa-peso-sign"></i>
             <p>
               Car Price Predictor
             </p>
@@ -55,7 +61,7 @@
         </li>
         <li class="nav-item">
           <a href="{{ url_for('evaluatepredict') }}" class="nav-link">
-            <i class="nav-icon fas fa-th"></i>
+            <i class="nav-icon fa-regular fa-circle-check"></i>
             <p>
               Car Evaluator
             </p>
@@ -63,63 +69,67 @@
         </li>
         <li class="nav-item">
           <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-copy"></i>
+            <i class="nav-icon fa-solid fa-table"></i>
             <p>
-              Layout Options
+              Tables
               <i class="fas fa-angle-left right"></i>
-              <span class="badge badge-info right">6</span>
+              <!-- <span class="badge badge-info right">6</span> -->
             </p>
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="{{ url_for('evaluatepredict') }}" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Car Evaluator</p>
+              <a href="{{ url_for('price_table') }}" class="nav-link">
+                <i class="nav-icon fa-solid fa-car"></i>
+                <p>Car Price Tables</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Top Navigation + Sidebar</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/layout/boxed.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Boxed</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/layout/fixed-sidebar.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Fixed Sidebar</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/layout/fixed-sidebar-custom.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Fixed Sidebar <small>+ Custom Area</small></p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/layout/fixed-topnav.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Fixed Navbar</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/layout/fixed-footer.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Fixed Footer</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/layout/collapsed-sidebar.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Collapsed Sidebar</p>
+              <a href="{{ url_for('safety_table') }}" class="nav-link">
+                <i class="nav-icon fa-solid fa-list-check"></i>
+                <p>Car Evaluation Tables</p>
               </a>
             </li>
           </ul>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url_for('train_model') }}" class="nav-link">
+            <i class="nav-icon fa-solid fa-dumbbell"></i>
+            <p>
+              Train Model
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fa-solid fa-chart-pie"></i>
+            <p>
+              Charts
+              <i class="fas fa-angle-left right"></i>
+              <!-- <span class="badge badge-info right">6</span> -->
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{ url_for('price_charts') }}" class="nav-link">
+                <i class="nav-icon fa-solid fa-chart-simple"></i>
+                <p>Car Price Charts</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ url_for('evaluation_charts') }}" class="nav-link">
+                <i class="nav-icon fa-solid fa-chart-area"></i>
+                <p>Car Evaluation Charts</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url_for('logout') }}" class="nav-link">
+              <i class=" nav-icon fa-solid fa-right-from-bracket"></i>
+            <p>
+              Logout
+            </p>
+          </a>
         </li>
     </nav>
     <!-- /.sidebar-menu -->
@@ -156,12 +166,11 @@
             <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">CPU Traffic</span>
+              <span class="info-box-text">Car Price Count</span>
               <span class="info-box-number">
-                10
-                <small>%</small>
+                  {{ car_price_count }}
               </span>
-            </div>
+          </div>          
             <!-- /.info-box-content -->
           </div>
           <!-- /.info-box -->
@@ -169,11 +178,10 @@
         <!-- /.col -->
         <div class="col-12 col-sm-6 col-md-3">
           <div class="info-box mb-3">
-            <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
-
+            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-thumbs-up"></i></span>
             <div class="info-box-content">
-              <span class="info-box-text">Likes</span>
-              <span class="info-box-number">41,410</span>
+              <span class="info-box-text">Accepted Car Evaluation</span>
+              <span class="info-box-number"> {{ a_car_evaluation_count }} </span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -186,11 +194,11 @@
 
         <div class="col-12 col-sm-6 col-md-3">
           <div class="info-box mb-3">
-            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+            <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-down"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Sales</span>
-              <span class="info-box-number">760</span>
+              <span class="info-box-text">Unccepted Car Evaluation</span>
+              <span class="info-box-number">{{ u_car_evaluation_count }} </span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -202,8 +210,8 @@
             <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">New Members</span>
-              <span class="info-box-number">2,000</span>
+              <span class="info-box-text">Users</span>
+              <span class="info-box-number"> {{ user_count }}</span>
             </div>
             <!-- /.info-box-content -->
           </div>

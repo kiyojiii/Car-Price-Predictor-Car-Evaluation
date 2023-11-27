@@ -1,0 +1,634 @@
+{% extends "base.html" %}
+{% block body %}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css" />
+
+<div class="preloader flex-column justify-content-center align-items-center">
+    <img class="animation__wobble" src="{{ url_for('static',filename='assets/img/favicon.png') }}" alt="AdminLTELogo" height="60" width="60">
+</div>
+  
+
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="index3.html" class="brand-link">
+      <img src="{{ url_for('static',filename='assets/img/favicon.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <h4><span class="brand-text font-weight-light">&nbsp;&nbsp;GuPa</h4>
+    </a>
+  
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="{{ url_for('static', filename='assets/img/user.png') }}" class="img-circle elevation-2"
+              alt="User Image" style="width: 40px; height: 40px;">
+        </div>    
+        <div class="info">
+          <h5>&nbsp;&nbsp;{{ first_name }} {{ last_name }}</h5>
+        </div>
+      </div>
+  
+      <!-- SidebarSearch Form -->
+      <div class="form-inline">
+        <div class="input-group" data-widget="sidebar-search">
+          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-sidebar">
+              <i class="fas fa-search fa-fw"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-item">
+                <a href="{{ url_for('dashboard') }}" class="nav-link">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Dashboard
+                </p>
+                </a>
+            </li>
+          <li class="nav-item">
+            <a href="{{ url_for('pricepredict') }}" class="nav-link">
+              <i class="nav-icon fa-solid fa-peso-sign"></i>
+              <p>
+                Car Price Predictor
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ url_for('evaluatepredict') }}" class="nav-link">
+              <i class="nav-icon fa-regular fa-circle-check"></i>
+              <p>
+                Car Evaluator
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa-solid fa-table"></i>
+              <p>
+                Tables
+                <i class="fas fa-angle-left right"></i>
+                <!-- <span class="badge badge-info right">6</span> -->
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ url_for('price_table') }}" class="nav-link">
+                  <i class="nav-icon fa-solid fa-car"></i>
+                  <p>Car Price Tables</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ url_for('safety_table') }}" class="nav-link">
+                  <i class="nav-icon fa-solid fa-list-check"></i>
+                  <p>Car Evaluation Tables</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="{{ url_for('train_model') }}" class="nav-link active">
+              <i class="nav-icon fa-solid fa-dumbbell"></i>
+              <p>
+                Train Model
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa-solid fa-chart-pie"></i>
+              <p>
+                Charts
+                <i class="fas fa-angle-left right"></i>
+                <!-- <span class="badge badge-info right">6</span> -->
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ url_for('price_charts') }}" class="nav-link">
+                  <i class="nav-icon fa-solid fa-chart-simple"></i>
+                  <p>Car Price Charts</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ url_for('evaluation_charts') }}" class="nav-link">
+                  <i class="nav-icon fa-solid fa-chart-area"></i>
+                  <p>Car Evaluation Charts</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="{{ url_for('logout') }}" class="nav-link">
+                <i class=" nav-icon fa-solid fa-right-from-bracket"></i>
+              <p>
+                Logout
+              </p>
+            </a>
+          </li>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+  
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Train Model</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Train Model</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-6">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Train Classification</h3>
+                        </div>
+                        <table id="train_price" class="display">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Brand</th>
+                                    <th>Model</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in range(data|length) %}
+                                <tr>
+                                    <td>{{ i + 1 }}</td>
+                                    <td>{{ data[i][1] }}</td>
+                                    <td>{{ data[i][2] }}</td>    
+                                    <td>
+                                        {% if data[i][7] is defined %}
+                                            {% set status = data[i][7]|int %}
+                                            {% if status is number %}
+                                                P {{ '{:,}'.format(status) }}
+                                            {% else %}
+                                                Value is not a number: {{ status }}
+                                            {% endif %}
+                                        {% else %}
+                                            Value is not defined
+                                        {% endif %}
+                                    </td>                                                              
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="card-footer">
+                            <div class="row align-items-center">
+                                <div class="col-md-4">
+                                    <form id="train-price-model-form" action="{{ url_for('train_price_model') }}" method="post">
+                                        <button type="submit" class="btn btn-primary" id="train-price-model-btn">Train Model</button>
+                                    </form>
+                                </div><br>
+                                <div id="loading-bar-price-model" style="display: none;">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                    <span id="progress-label-price-model">Training model...</span>
+                                    <div class="progress">
+                                        <div id="progress-bar-price-model" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <div id="success-prompt-price-model" style="display: none;" class="text-success">
+                                    <p id="r2score-text">Model trained successfully! R2_Score: <span id="r2score-value"></span></p>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row align-items-center">
+                                <div class="col-md-4">
+                                    <form id="reset-price-model-form" action="{{ url_for('reset_price_model') }}" method="post">
+                                        <button type="submit" class="btn btn-danger" id="reset-price-model-btn">Reset Model</button>
+                                    </form>
+                                </div><br>
+                                <div id="loading-bar-reset-price-model" style="display: none;">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                    <span id="progress-label-reset-price-model">Resetting model...</span>
+                                    <div class="progress">
+                                        <div id="progress-bar-reset-price-model" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <div id="success-prompt-reset-price-model" style="display: none;" class="text-success">
+                                    <p id="r2score-text2">Model Reset successful! R2_Score: <span id="r2score-value2"></span></p>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row align-items-center">
+                                <div class="col-md-4">
+                                    <button class="btn btn-success" id="reload-btn">Reload CSV</button>
+                                </div>
+                                <div>
+                                    <span id="success-message" style="color: rgb(0, 255, 0); margin-left: 10px;"></span>
+                                    <span id="error-message" style="color: red; margin-left: 10px;"></span>
+                                </div>                          
+                            </div>
+                        </div> 
+                    </div>                                         
+                    <!-- /.card -->
+
+                </div>                      
+                <!-- right column -->
+                <!-- Add these input elements in your pricepredict.html template -->
+
+
+                <br>
+                <div class="col-md-6">
+                    <!-- Form Element sizes -->
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Train Regression</h3>
+                        </div>
+                        <table id="train_safety" class="display">
+                            <thead>
+                                <tr>
+                                    <td>No.</td>
+                                    <th style="display:none;">ID</th>
+                                    <th>Buying P.</th>
+                                    <th>Maintenance C.</th>
+                                    <th>No. Doors</th>
+                                    <th>Classify</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in range(data2|length) %}
+                                <tr>
+                                    <td class="text-center">{{ i + 1 }}</td>
+                                    <td style="display:none;">{{ data2[i][0] }}</td>
+                                    <td class="text-center">{{ data2[i][1] }}</td>
+                                    <td class="text-center">{{ data2[i][2] }}</td>
+                                    <td class="text-center">{{ data2[i][3] }}</td>
+                                    <td class="text-center">
+                                    {% set status = data2[i][7]|int %}                          
+                                    {% if status == 1 %}
+                                        <span class="badge badge-success">Accepted</span>
+                                    {% elif status == 0 %}
+                                        <span class="badge badge-danger">Unaccepted</span>
+                                    {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>      
+                        <div class="card-footer">
+                            <div class="row align-items-center">
+                                <div class="col-md-4">
+                                    <form id="train-model-form" action="{{ url_for('train_evaluation_model') }}" method="post">
+                                        <button type="submit" class="btn btn-primary" id="train-model-btn">Train Model</button>
+                                    </form>
+                                </div><br>
+                                    <div id="loading-bar" style="display: none;">
+                                        <div class="spinner-border text-primary" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                        <span id="progress-label">Training model...</span>
+                                        <div class="progress">
+                                            <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                    <div id="success-prompt" style="display: none;" class="text-success">
+                                        <p id="accuracy-text">Model trained successfully! Accuracy: <span id="accuracy-value"></span>%</p>
+                                    </div>
+                            </div>
+                            <br>
+                            <div class="row align-items-center">
+                                <div class="col-md-4">
+                                    <form id="reset-model-form" action="{{ url_for('reset_evaluation_model') }}" method="post">
+                                        <button type="submit" class="btn btn-danger" id="reset-model-btn">Reset Model</button>
+                                    </form>
+                                </div><br>
+                                <div id="loading-bar2" style="display: none;">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                    <span id="progress-label2">Resetting model...</span>
+                                    <div class="progress">
+                                        <div id="progress-bar2" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <div id="success-prompt2" style="display: none;" class="text-success">
+                                    <p id="accuracy-text2">Model Reset successful! Accuracy: <span id="accuracy-value2"></span>%</p>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row align-items-center">
+                                <div class="col-md-4">
+                                    <button class="btn btn-success" id="reload-evaluation-btn">Reload CSV</button>
+                                </div>
+                                <div>
+                                    <span id="success-message2" style="color: rgb(0, 255, 0); margin-left: 10px;"></span>
+                                    <span id="error-message2" style="color: red; margin-left: 10px;"></span>
+                                </div>                          
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+                <!--/.col (right) -->
+            </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<!-- RELOAD CSV -->
+<script>
+    $(document).ready(function() {
+        $("#reload-evaluation-btn").click(function() {
+            // Make an AJAX request to the reload endpoint
+            $.get("/reload_evaluation_csv", function(data) {
+                if (data.success) {
+                    // Show a success message
+                    $("#success-message2").text("CSV Reload successful");
+                } else {
+                    // Show an error message
+                    $("#error-message2").text("Failed to reload CSV");
+                }
+            });
+        });
+    });
+</script>
+
+
+<!-- RELOAD CSV -->
+<script>
+    $(document).ready(function() {
+        $("#reload-btn").click(function() {
+            // Make an AJAX request to the reload endpoint
+            $.get("/reload_csv", function(data) {
+                if (data.success) {
+                    // Show a success message
+                    $("#success-message").text("CSV Reload successful");
+                } else {
+                    // Show an error message
+                    $("#error-message").text("Failed to reload CSV");
+                }
+            });
+        });
+    });
+</script>
+
+
+<!-- CAR PRICE SCRIPT -->
+<script>
+    $(document).ready(function() {
+        $("#reset-price-model-form").submit(function(e) {
+            e.preventDefault(); // Prevent the form from submitting normally
+
+            // Show loading bar
+            $("#loading-bar-reset-price-model").show();
+
+            // Make an AJAX request to reset the model
+            $.ajax({
+                type: "POST",
+                url: "{{ url_for('reset_price_model') }}",
+                success: function(data) {
+                    // Hide loading bar after a delay (e.g., 5 seconds)
+                    setTimeout(function() {
+                        $("#loading-bar-reset-price-model").hide();
+
+                        // Show success prompt
+                        $("#success-prompt-reset-price-model").show();
+                        
+                        // Display r2_score
+                        $("#r2score-value2").text(data.r2_score.toFixed(2));
+                    }, 5000); // Adjust the delay as needed
+                },
+                error: function(error) {
+                    // Handle error if needed
+                    console.error("Error:", error);
+                },
+                xhr: function() {
+                    // Custom XHR for handling progress updates
+                    var xhr = new window.XMLHttpRequest();
+                    xhr.upload.addEventListener("progress", function(evt) {
+                        if (evt.lengthComputable) {
+                            var percentComplete = (evt.loaded / evt.total) * 100;
+                            $("#progress-bar-reset-price-model").width(percentComplete + "%");
+                            $("#progress-bar-reset-price-model").attr("aria-valuenow", percentComplete);
+                            $("#progress-label-reset-price-model").text("Resetting model... " + percentComplete.toFixed(2) + "%");
+                        }
+                    }, false);
+                    return xhr;
+                }
+            });
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $("#train-price-model-form").submit(function(e) {
+            e.preventDefault(); // Prevent the form from submitting normally
+    
+            // Show loading bar
+            $("#loading-bar-price-model").show();
+    
+            // Make an AJAX request to train the model
+            $.ajax({
+                type: "POST",
+                url: "{{ url_for('train_price_model') }}",
+                success: function(data) {
+                    // Hide loading bar after a delay (e.g., 5 seconds)
+                    setTimeout(function() {
+                        $("#loading-bar-price-model").hide();
+    
+                        // Show success prompt
+                        $("#success-prompt-price-model").show();
+                        
+                        // Display r2_score
+                        $("#r2score-value").text(data.r2_score.toFixed(2));
+                    }, 5000); // Adjust the delay as needed
+                },
+                error: function(error) {
+                    // Handle error if needed
+                    console.error("Error:", error);
+                },
+                xhr: function() {
+                    // Custom XHR for handling progress updates
+                    var xhr = new window.XMLHttpRequest();
+                    xhr.upload.addEventListener("progress", function(evt) {
+                        if (evt.lengthComputable) {
+                            var percentComplete = (evt.loaded / evt.total) * 100;
+                            $("#progress-bar-price-model").width(percentComplete + "%");
+                            $("#progress-bar-price-model").attr("aria-valuenow", percentComplete);
+                            $("#progress-label-price-model").text("Training model... " + percentComplete.toFixed(2) + "%");
+                        }
+                    }, false);
+                    return xhr;
+                }
+            });
+        });
+    });
+</script>
+
+
+
+<!-- CAR EVALUATION TRAINING SCRIPT -->
+<script>
+    $(document).ready(function() {
+        $("#reset-model-form").submit(function(e) {
+            e.preventDefault(); // Prevent the form from submitting normally
+
+            // Show loading bar
+            $("#loading-bar2").show();
+
+            // Make an AJAX request to reset the model
+            $.ajax({
+                type: "POST",
+                url: "{{ url_for('reset_evaluation_model') }}",
+                success: function(data) {
+                    // Hide loading bar
+                    $("#loading-bar2").hide();
+
+                    // Show success prompt
+                    $("#success-prompt2").show();
+
+                    // Display accuracy
+                    $("#accuracy-value2").text(data.accuracy.toFixed(2));
+                },
+                error: function(error) {
+                    // Handle error if needed
+                    console.error("Error:", error);
+                },
+                xhr: function() {
+                    // Custom XHR for handling progress updates
+                    var xhr = new window.XMLHttpRequest();
+                    xhr.upload.addEventListener("progress", function(evt) {
+                        if (evt.lengthComputable) {
+                            var percentComplete = (evt.loaded / evt.total) * 100;
+                            $("#progress-bar2").width(percentComplete + "%");
+                            $("#progress-bar2").attr("aria-valuenow", percentComplete);
+                            $("#progress-label2").text("Resetting model... " + percentComplete.toFixed(2) + "%");
+                        }
+                    }, false);
+                    return xhr;
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $("#train-model-form").submit(function(e) {
+            e.preventDefault(); // Prevent the form from submitting normally
+    
+            // Show loading bar
+            $("#loading-bar").show();
+    
+            // Make an AJAX request to train the model
+            $.ajax({
+                type: "POST",
+                url: "{{ url_for('train_evaluation_model') }}",
+                success: function(data) {
+                    // Hide loading bar
+                    $("#loading-bar").hide();
+    
+                    // Show success prompt
+                    $("#success-prompt").show();
+                    
+                    // Display accuracy
+                    $("#accuracy-value").text(data.accuracy.toFixed(2));
+                },
+                error: function(error) {
+                    // Handle error if needed
+                    console.error("Error:", error);
+                },
+                xhr: function() {
+                    // Custom XHR for handling progress updates
+                    var xhr = new window.XMLHttpRequest();
+                    xhr.upload.addEventListener("progress", function(evt) {
+                        if (evt.lengthComputable) {
+                            var percentComplete = (evt.loaded / evt.total) * 100;
+                            $("#progress-bar").width(percentComplete + "%");
+                            $("#progress-bar").attr("aria-valuenow", percentComplete);
+                            $("#progress-label").text("Training model... " + percentComplete.toFixed(2) + "%");
+                        }
+                    }, false);
+                    return xhr;
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#train_price').DataTable({
+            "pageLength": 5, // Set the default number of rows per page to 7
+            "lengthMenu": [[5, 12, 18, -1], [5, 12, 18, "All"]], // Define the available page length options
+            "order": [[0, "desc"]],
+            dom: 'Bfrtip',
+            buttons: [
+            'copyHtml5',
+            'excelHtml5',
+            'csvHtml5',
+            'pdfHtml5'
+            ]
+        });
+    });
+</script>
+
+
+<script>
+    $(document).ready(function () {
+        $('#train_safety').DataTable({
+            "pageLength": 5, // Set the default number of rows per page to 7
+            "lengthMenu": [[5, 12, 18, -1], [5, 12, 18, "All"]], // Define the available page length options
+            "order": [[0, "desc"]],
+            dom: 'Bfrtip',
+            buttons: [
+            'copyHtml5',
+            'excelHtml5',
+            'csvHtml5',
+            'pdfHtml5'
+            ]
+        });
+    });
+</script>
+
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+
+{% endblock %}

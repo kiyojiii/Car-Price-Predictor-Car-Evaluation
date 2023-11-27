@@ -1,0 +1,52 @@
+if 'username' in session:
+        username = session['username']
+
+        # Assuming you have a database connection
+        conn = pymysql.connect(host='localhost', user='root', password='', database='gulonggulo')
+        cursor = conn.cursor()
+
+        # Fetch user details from the gg_users table based on the username
+        cursor.execute("SELECT first_name, last_name FROM gg_users WHERE username = %s", (username,))
+        user_data = cursor.fetchone()
+
+        # Close the database connection
+        cursor.close()
+        conn.close()
+	
+	 # Fetch data for the selected car by ID
+    	cur = mysql.connection.cursor()
+    	cur.execute("SELECT id, company, name, transmission, year, fuel_type, kms_driven, Price FROM car_price WHERE id = %s", (car_id,))
+    	car_data = cur.fetchone()
+    	cur.close()
+
+    	if request.method == 'POST':
+            # Update the data in the database with the new values
+            updated_company = request.form['company']
+            updated_name = request.form['model']
+            updated_transmission = request.form['transmission']
+            updated_year = request.form['year']
+            updated_fuel_type = request.form['fuel_type']
+            updated_kms_driven = request.form['mileage']
+            updated_price = request.form['price']
+
+            cur = mysql.connection.cursor()
+            cur.execute("UPDATE car_price SET company=%s, name=%s, transmission=%s, year=%s, fuel_type=%s, kms_driven=%s, Price=%s WHERE id=%s",
+                        (updated_company, updated_name, updated_transmission, updated_year, updated_fuel_type, updated_kms_driven, updated_price, car_id))
+            mysql.connection.commit()
+            cur.close()
+
+        return redirect('/price_table')
+
+        # Print the data for debugging
+        # for row in data:
+        #     print(row)
+        if user_data:
+                # If user_data is not None, it means the user was found in the database
+                first_name = user_data[0]
+                last_name = user_data[1]
+                return render_template("edit_price.html", car_data=car_data,companies=companies, car_models=car_models, years=year,fuel_types=fuel_type, username=username, first_name=first_name, last_name=last_name)
+        else:
+                # Handle the case where the user is not found in the database
+                return render_template("edit_price.html", car_data=car_data,companies=companies, car_models=car_models, years=year,fuel_types=fuel_type, username=username, first_name=first_name, last_name=last_name)
+    else:
+        return render_template('dashboard.html', username=None, first_name=None, last_name=None)

@@ -1,0 +1,321 @@
+{% extends "base.html" %}
+{% block body %}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js" integrity="sha512-7U4rRB8aGAHGVad3u2jiC7GA5/1YhQcQjxKeaVms/bT66i3LVBMRcBI9KwABNWnxOSwulkuSXxZLGuyfvo7V1A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<div class="preloader flex-column justify-content-center align-items-center">
+    <img class="animation__wobble" src="{{ url_for('static',filename='assets/img/favicon.png') }}" alt="AdminLTELogo" height="60" width="60">
+</div>
+  
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="index3.html" class="brand-link">
+      <img src="{{ url_for('static',filename='assets/img/favicon.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <h4><span class="brand-text font-weight-light">&nbsp;&nbsp;GuPa</h4>
+    </a>
+  
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="{{ url_for('static', filename='assets/img/user.png') }}" class="img-circle elevation-2"
+              alt="User Image" style="width: 40px; height: 40px;">
+        </div>    
+        <div class="info">
+          <h5>&nbsp;&nbsp;{{ first_name }} {{ last_name }}</h5>
+        </div>
+      </div>
+  
+      <!-- SidebarSearch Form -->
+      <div class="form-inline">
+        <div class="input-group" data-widget="sidebar-search">
+          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-sidebar">
+              <i class="fas fa-search fa-fw"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-item">
+                <a href="{{ url_for('dashboard') }}" class="nav-link">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Dashboard
+                </p>
+                </a>
+            </li>
+          <li class="nav-item">
+            <a href="{{ url_for('pricepredict') }}" class="nav-link">
+              <i class="nav-icon fa-solid fa-peso-sign"></i>
+              <p>
+                Car Price Predictor
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ url_for('evaluatepredict') }}" class="nav-link">
+              <i class="nav-icon fa-regular fa-circle-check"></i>
+              <p>
+                Car Evaluator
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa-solid fa-table"></i>
+              <p>
+                Tables
+                <i class="fas fa-angle-left right"></i>
+                <!-- <span class="badge badge-info right">6</span> -->
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ url_for('price_table') }}" class="nav-link">
+                  <i class="nav-icon fa-solid fa-car"></i>
+                  <p>Car Price Tables</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ url_for('safety_table') }}" class="nav-link">
+                  <i class="nav-icon fa-solid fa-list-check"></i>
+                  <p>Car Evaluation Tables</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="{{ url_for('train_model') }}" class="nav-link">
+              <i class="nav-icon fa-solid fa-dumbbell"></i>
+              <p>
+                Train Model
+              </p>
+            </a>
+          </li>
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa-solid fa-chart-pie"></i>
+              <p>
+                Charts
+                <i class="fas fa-angle-left right"></i>
+                <!-- <span class="badge badge-info right">6</span> -->
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ url_for('price_charts') }}" class="nav-link active">
+                  <i class="nav-icon fa-solid fa-chart-simple"></i>
+                  <p>Car Price Charts</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ url_for('evaluation_charts') }}" class="nav-link">
+                  <i class="nav-icon fa-solid fa-chart-area"></i>
+                  <p>Car Evaluation Charts</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="{{ url_for('logout') }}" class="nav-link">
+                <i class=" nav-icon fa-solid fa-right-from-bracket"></i>
+              <p>
+                Logout
+              </p>
+            </a>
+          </li>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Car Price Charts</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Car Price Charts</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Car Price Charts</h3>
+                            <!-- <a href="{{ url_for('create_evaluation')}}" class="btn btn-secondary btn-sm float-right">Add Car Details</a> -->
+                        </div>
+                        <canvas id="companyChart" width="400" height="200"></canvas>
+                    </div>                                         
+                    <!-- /.card -->
+
+                </div>
+                <!-- right column -->
+                <!-- Add these input elements in your pricepredict.html template -->
+                <!--/.col (right) -->
+            </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<script>
+    // Add this script to your HTML file
+    document.addEventListener('DOMContentLoaded', function () {
+        // Assume you have a list of companies and their corresponding counts
+        var companies = {{ company_data|tojson }};
+        
+        // Get the canvas element
+        var ctx = document.getElementById('companyChart').getContext('2d');
+
+        // Create a bar chart
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(companies),
+                datasets: [{
+                    label: 'Company Counts',
+                    data: Object.values(companies),
+                    backgroundColor: [
+                    'rgba(255, 223, 186, 1)',  // Light Orange
+                    'rgba(192, 236, 216, 1)',  // Light Green
+                    'rgba(255, 209, 220, 1)',  // Light Pink
+                    'rgba(173, 216, 230, 1)',  // Light Blue
+                    'rgba(255, 235, 205, 1)',  // Light Goldenrod Yellow
+                    'rgba(220, 220, 220, 1)',  // Light Gray
+                    'rgba(255, 140, 0, 1)',    // Light Orange (with more saturation)
+                    'rgba(173, 255, 47, 1)',   // Light Green (with more saturation)
+                    'rgba(255, 182, 193, 1)',  // Light Pink (with more saturation)
+                    'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                    'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                    'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                    'rgba(255, 69, 0, 1)',     // Red-Orange
+                    'rgba(152, 251, 152, 1)',  // Pale Green
+                    'rgba(255, 192, 203, 1)',  // Pink
+                    'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                    'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                    'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                    'rgba(255, 105, 180, 1)',  // Hot Pink
+                    'rgba(144, 238, 144, 1)',  // Light Green (duplicate for variety)
+                    'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                    'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                    'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                    'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                    'rgba(255, 20, 147, 1)',   // Deep Pink
+                    'rgba(0, 255, 127, 1)',    // Spring Green
+                    'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                    'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                    'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                    'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                    'rgba(255, 0, 0, 1)',      // Red
+                    'rgba(0, 255, 0, 1)',      // Lime
+                    'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                    'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                    'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                    'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                    'rgba(255, 165, 0, 1)',    // Orange
+                    'rgba(0, 128, 0, 1)',      // Green
+                    'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                    'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                    'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                    'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                    'rgba(255, 255, 0, 1)',    // Yellow
+                    'rgba(0, 0, 255, 1)',      // Blue
+                    'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                    'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                    'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                    'rgba(211, 211, 211, 1)',  // Light Gray (duplicate
+                    ],
+                    borderColor: [
+                    'rgba(255, 223, 186, 1)',  // Light Orange
+                    'rgba(192, 236, 216, 1)',  // Light Green
+                    'rgba(255, 209, 220, 1)',  // Light Pink
+                    'rgba(173, 216, 230, 1)',  // Light Blue
+                    'rgba(255, 235, 205, 1)',  // Light Goldenrod Yellow
+                    'rgba(220, 220, 220, 1)',  // Light Gray
+                    'rgba(255, 140, 0, 1)',    // Light Orange (with more saturation)
+                    'rgba(173, 255, 47, 1)',   // Light Green (with more saturation)
+                    'rgba(255, 182, 193, 1)',  // Light Pink (with more saturation)
+                    'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                    'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                    'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                    'rgba(255, 69, 0, 1)',     // Red-Orange
+                    'rgba(152, 251, 152, 1)',  // Pale Green
+                    'rgba(255, 192, 203, 1)',  // Pink
+                    'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                    'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                    'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                    'rgba(255, 105, 180, 1)',  // Hot Pink
+                    'rgba(144, 238, 144, 1)',  // Light Green (duplicate for variety)
+                    'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                    'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                    'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                    'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                    'rgba(255, 20, 147, 1)',   // Deep Pink
+                    'rgba(0, 255, 127, 1)',    // Spring Green
+                    'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                    'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                    'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                    'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                    'rgba(255, 0, 0, 1)',      // Red
+                    'rgba(0, 255, 0, 1)',      // Lime
+                    'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                    'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                    'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                    'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                    'rgba(255, 165, 0, 1)',    // Orange
+                    'rgba(0, 128, 0, 1)',      // Green
+                    'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                    'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                    'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                    'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                    'rgba(255, 255, 0, 1)',    // Yellow
+                    'rgba(0, 0, 255, 1)',      // Blue
+                    'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                    'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                    'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                    'rgba(211, 211, 211, 1)',  // Light Gray (duplicate
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+{% endblock %}

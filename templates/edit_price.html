@@ -1,12 +1,6 @@
 {% extends "base.html" %}
 {% block body %}
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__wobble" src="{{ url_for('static',filename='assets/img/favicon.png') }}" alt="AdminLTELogo" height="60" width="60">
-</div>
-  
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
@@ -80,13 +74,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ url_for('price_table') }}" class="nav-link">
+                <a href="{{ url_for('price_table') }}" class="nav-link active">
                   <i class="nav-icon fa-solid fa-car"></i>
                   <p>Car Price Tables</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ url_for('safety_table') }}" class="nav-link active">
+                <a href="{{ url_for('safety_table') }}" class="nav-link">
                   <i class="nav-icon fa-solid fa-list-check"></i>
                   <p>Car Evaluation Tables</p>
                 </a>
@@ -146,12 +140,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>List of Car Evaluation</h1>
+                    <h1>Car Price Predictor</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">List of Car Evaluation</li>
+                        <li class="breadcrumb-item active">Car Price Predictor</li>
+                        <li class="breadcrumb-item active">Edit Car Price</li>
                     </ol>
                 </div>
             </div>
@@ -163,61 +158,72 @@
         <div class="container-fluid">
             <div class="row">
                 <!-- left column -->
-                <div class="col-md-12">
+                <div class="col-md-12 mx-auto">
                     <!-- general form elements -->
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Safety Evaluation</h3>
-                            <a href="{{ url_for('create_evaluation')}}" class="btn btn-secondary btn-sm float-right">Add Car Details</a>
+                            <h2 class="card-title">Edit Existing Car Price</h2>
                         </div>
-                        <table id="safety_table" class="display">
-                            <thead>
-                                <tr>
-                                    <td>No.</td>
-                                    <th style="display:none;">ID</th>
-                                    <th>Buying Price</th>
-                                    <th>Maintenance Cost</th>
-                                    <th>No. Doors</th>
-                                    <th>No. Persons</th>
-                                    <th>Lug Boot</th>
-                                    <th>Safety</th>
-                                    <th>Classification</th>
-                                    <th class="text-center">Action</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for i in range(data|length) %}
-                                <tr>
-                                    <td class="text-center">{{ i + 1 }}</td>
-                                    <td style="display:none;">{{ data[i][0] }}</td>
-                                    <td class="text-center">{{ data[i][1] }}</td>
-                                    <td class="text-center">{{ data[i][2] }}</td>
-                                    <td class="text-center">{{ data[i][3] }}</td>
-                                    <td class="text-center">{{ data[i][4] }}</td>
-                                    <td class="text-center">{{ data[i][5] }}</td>
-                                    <td class="text-center">{{ data[i][6] }}</td>
-                                    <td class="text-center">
-                                    {% set status = data[i][7]|int %}                          
-                                    {% if status == 1 %}
-                                        <span class="badge badge-success">Accepted</span>
-                                    {% elif status == 0 %}
-                                        <span class="badge badge-danger">Unaccepted</span>
-                                    {% endif %}
-                                    </td>
-                                    <td>
-                                        <a href="/edit_evaluation/{{ data[i][0] }}" class="btn btn-warning btn-sm">Edit</a>
-                                        <form id="deleteForm_{{ data[i][0] }}" method="post" action="/delete_evaluation/{{ data[i][0] }}" style="display:inline">
-                                            <button type="button" class="btn btn-danger btn-sm btn-delete" data-carid="{{ data[i][0] }}">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+                        <form method="post">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="company">Brand</label>
+                                            <input type="text" class="form-control" id="company" name="company" value="{{ car_data[1] }}" placeholder="Enter the Brand " required>
+                                        </div>
+                                 
+                                              
+                                        <div class="form-group">
+                                            <label for="model">Model</label>
+                                            <input type="text" class="form-control" id="model" name="model" value="{{ car_data[2] }}" placeholder="Enter the Model " required>
+                                        </div>     
+
+                                               
+                                        <div class="form-group">
+                                            <label for="year">Year</label>
+                                            <input type="number" class="form-control" id="year" name="year" value="{{ car_data[4] }}" placeholder="Enter Model Year " required>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+
+                                        <div class="form-group">
+                                            <label for="fuel_type">Fuel Type</label>
+                                            <input type="text" class="form-control" id="fuel_type" name="fuel_type" value="{{ car_data[5] }}" placeholder="Enter the Fuel Type" required>
+                                        </div>
+                                                                                  
+                                        <div class="form-group">
+                                            <label for="transmission">Transmission</label>
+                                            <input type="text" class="form-control" id="transmission" name="transmission" value="{{ car_data[3] }}" placeholder="Enter the Transmission " required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="mileage">Mileage (Kilometers)</label>
+                                            <input type="number" class="form-control" id="mileage" name="mileage" value="{{ car_data[6] }}" placeholder="Enter the Mileage" required>
+                                        </div>
+                                        
+
+                                        <div class="text-center">
+                                            <label><b>Price (P): </b> </label><br>
+                                            <input type="text" class="form-control" id="price" name="price" value="{{ car_data[7] }}" placeholder="Enter the Price" required>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary" id="addToDatabasePriceBtn">Update Car Price</button>
+                                <a href="{{ url_for('price_table')}}" class="btn btn-danger float-right">Back</a>
+                            </div>
+                        </form>
                     </div>                                         
                     <!-- /.card -->
 
                 </div>
+
                 <!-- right column -->
                 <!-- Add these input elements in your pricepredict.html template -->
                 <!--/.col (right) -->
@@ -229,46 +235,4 @@
 </div>
 <!-- /.content-wrapper -->
 
-<script>
-    $(document).ready(function () {
-        $('#safety_table').DataTable({
-            "pageLength": 6, // Set the default number of rows per page to 7
-            "lengthMenu": [[6, 12, 18, -1], [6, 12, 18, "All"]], // Define the available page length options
-            "order": [[0, "desc"]],
-        });
-    });
-</script>
-
-<!-- SweetAlert confirmation script -->
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const btnDelete = document.querySelectorAll('.btn-delete');
-        if (btnDelete) {
-            const btnArray = Array.from(btnDelete);
-            btnArray.forEach((btn) => {
-                btn.addEventListener('click', (e) => {
-                    const carId = btn.getAttribute('data-carid');
-                    confirmDelete(carId);
-                });
-            });
-        }
-    });
-
-    function confirmDelete(carId) {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: 'You won\'t be able to revert this!',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // If confirmed, submit the form
-                document.forms['deleteForm_' + carId].submit();
-            }
-        });
-    }
-</script>
 {% endblock %}
