@@ -164,7 +164,7 @@
                         <div class="card-header">
                             <h2 class="card-title">Add Car Safety Details</h2>
                         </div>
-                        <form action="add_evaluation" method="post">
+                        <form action="add_evaluation" method="post" onsubmit="showSuccessMessage()">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-lg-6">
@@ -274,5 +274,27 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('addToDatabasePriceBtn').addEventListener('click', function () {
+          showSuccessAlert();
+      });
+
+      function showSuccessAlert() {
+          Swal.fire({
+              icon: 'success',
+              title: 'Success!',
+              text: 'The results have been added to the database.',
+          });
+      }
+  });
+</script>
+
+<script>
+  function showSuccessMessage() {
+      alert("Data has been successfully added to the database!");
+  }
+</script>
 
 {% endblock %}

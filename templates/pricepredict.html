@@ -164,7 +164,7 @@
                     <div class="card card-primary">
                         <div class="card-header">
                             <h3 class="card-title">Car Details</h3>
-                            <button class="btn-sm btn-success float-right" id="reload-btn" >Reload CSV</button>
+                            <button class="btn btn-success float-right" id="reload-btn" >Reload CSV</button>
                         </div>
                         <form action="{{ url_for('predict')}}" method="post" accept-charset="utf-8" name="Modelform">
                             <div class="card-body">
@@ -301,8 +301,9 @@
                     <div class="card card-primary">
                         <div class="card-header">
                             <h3 class="card-title">Price Predicted</h3>
+                            <a href="{{ url_for('dashboard')}}" class="btn btn-danger float-right">Back</a>
                         </div>
-                        <form action="{{ url_for('add_price') }}" method="POST">
+                        <form action="{{ url_for('add_price') }}" method="POST" onsubmit="showSuccessMessage()">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-lg-6">
@@ -361,11 +362,34 @@
                 <!--/.col (right) -->
             </div>
             <!-- /.row -->
-        </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('addToDatabasePriceBtn').addEventListener('click', function () {
+          showSuccessAlert();
+      });
+
+      function showSuccessAlert() {
+          Swal.fire({
+              icon: 'success',
+              title: 'Success!',
+              text: 'The results have been added to the database.',
+          });
+      }
+  });
+</script>
+
+<script>
+  function showSuccessMessage() {
+      alert("Data has been successfully added to the database!");
+  }
+</script>
 
 <script>
     $(document).ready(function() {
@@ -382,5 +406,4 @@
         });
     });
 </script>
-
 {% endblock %}

@@ -142,48 +142,581 @@
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Car Evaluation Charts</h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Car Evaluation Charts</li>
-                    </ol>
-                </div>
-            </div>
-        </div><!-- /.container-fluid -->
-    </section>
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+      <div class="container-fluid">
+          <div class="row mb-2">
+              <div class="col-sm-6">
+                  <h1>Car Evaluation Charts</h1>
+              </div>
+              <div class="col-sm-6">
+                  <ol class="breadcrumb float-sm-right">
+                      <li class="breadcrumb-item"><a href="#">Home</a></li>
+                      <li class="breadcrumb-item active">Car Evaluation Charts</li>
+                  </ol>
+              </div>
+          </div>
+      </div><!-- /.container-fluid -->
+  </section>
 
-    <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <!-- left column -->
-                <div class="col-md-12">
-                    <!-- general form elements -->
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h3 class="card-title">Car Evaluation Charts</h3>
-                            <!-- <a href="{{ url_for('create_evaluation')}}" class="btn btn-secondary btn-sm float-right">Add Car Details</a> -->
-                        </div>
-                        #
-                    </div>                                         
-                    <!-- /.card -->
-                </div>
-                <!-- right column -->
-                <!-- Add these input elements in your pricepredict.html template -->
-                <!--/.col (right) -->
-            </div>
-            <!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
+  <!-- Main content -->
+  <section class="content">
+      <div class="container-fluid">
+          <div class="row">
+              <!-- left column -->
+              <div class="col-md-12">
+                  <!-- general form elements -->
+                  <div class="card card-primary">
+                      <div class="card-header">
+                          <h3 class="card-title">Frequency of Maintenance Cost vs Buying Price</h3>
+                          <!-- <a href="{{ url_for('create_evaluation')}}" class="btn btn-secondary btn-sm float-right">Add Car Details</a> -->
+                      </div>
+                      <canvas id="groupedBarChart" width="400" height="200"></canvas>
+                  </div>       
+                  <div class="card card-primary">
+                    <div class="container-fluid">
+                      <div class="row">
+                          <!-- left column -->
+                          <div class="col-md-6">
+                              <!-- general form elements -->
+                              <div class="card card-primary">
+                                  <div class="card-header">
+                                      <h3 class="card-title">Frequency for Luggage Boot</h3>
+                                  </div>
+                                  <canvas id="lugbootChart" width="50" height="30"></canvas>
+                              </div>                                         
+                              <!-- /.card -->
+          
+                          </div>
+          
+                          <br>
+                          <div class="col-md-6">
+                              <!-- Form Element sizes -->
+                              <!-- general form elements -->
+                              <div class="card card-primary">
+                                  <div class="card-header">
+                                      <h3 class="card-title">Classification: 1 - Accepted(Blue) vs 0 - Unaccepted(Pink)</h3>
+                                  </div>
+                                  <canvas id="classificationPieChart" width="50" height="30"></canvas>
+                              </div>
+                          </div>
+                          <!--/.col (right) -->
+                      </div>
+                      <!-- /.row -->
+                    </div>
+                </div>   
+
+                <section class="content">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <!-- left column -->
+                          <div class="col-md-6">
+                              <!-- general form elements -->
+                              <div class="card card-primary">
+                                  <div class="card-header">
+                                      <h3 class="card-title">Frequency for Number of Persons</h3>
+                                  </div>
+                                  <canvas id="num_personsChart" width="50" height="30"></canvas>
+                              </div>                                         
+                              <!-- /.card -->
+          
+                          </div>
+          
+                          <br>
+                          <div class="col-md-6">
+                              <!-- Form Element sizes -->
+                              <!-- general form elements -->
+                              <div class="card card-primary">
+                                  <div class="card-header">
+                                      <h3 class="card-title">Frequency for Number of Doors</h3>
+                                  </div>
+                                  <canvas id="num_doorsChart" width="50" height="30"></canvas>
+                              </div>
+                          </div>
+                          <!--/.col (right) -->
+                      </div>
+                      <!-- /.row -->
+                  </div><!-- /.container-fluid -->
+              </section>                                
+                  <!-- /.card -->
+
+              </div>
+              <!-- right column -->
+              <!-- Add these input elements in your pricepredict.html template -->
+              <!--/.col (right) -->
+          </div>
+          <!-- /.row -->
+      </div><!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+<script>
+  // Add this script to your HTML file
+  document.addEventListener('DOMContentLoaded', function () {
+      // Assume you have a list of companies and their corresponding counts
+      var lug_boot = {{ lug_boot_data|tojson }};
+      
+      // Get the canvas element
+      var ctx = document.getElementById('lugbootChart').getContext('2d');
+
+      // Create a bar chart
+      var chart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: Object.keys(lug_boot),
+              datasets: [{
+                  label: 'Luggage Boot Count',
+                  data: Object.values(lug_boot),
+                  backgroundColor: [
+                  'rgba(255, 223, 186, 1)',  // Light Orange
+                  'rgba(192, 236, 216, 1)',  // Light Green
+                  'rgba(255, 209, 220, 1)',  // Light Pink
+                  'rgba(173, 216, 230, 1)',  // Light Blue
+                  'rgba(255, 235, 205, 1)',  // Light Goldenrod Yellow
+                  'rgba(220, 220, 220, 1)',  // Light Gray
+                  'rgba(255, 140, 0, 1)',    // Light Orange (with more saturation)
+                  'rgba(173, 255, 47, 1)',   // Light Green (with more saturation)
+                  'rgba(255, 182, 193, 1)',  // Light Pink (with more saturation)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 69, 0, 1)',     // Red-Orange
+                  'rgba(152, 251, 152, 1)',  // Pale Green
+                  'rgba(255, 192, 203, 1)',  // Pink
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 105, 180, 1)',  // Hot Pink
+                  'rgba(144, 238, 144, 1)',  // Light Green (duplicate for variety)
+                  'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 20, 147, 1)',   // Deep Pink
+                  'rgba(0, 255, 127, 1)',    // Spring Green
+                  'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 0, 0, 1)',      // Red
+                  'rgba(0, 255, 0, 1)',      // Lime
+                  'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 165, 0, 1)',    // Orange
+                  'rgba(0, 128, 0, 1)',      // Green
+                  'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 255, 0, 1)',    // Yellow
+                  'rgba(0, 0, 255, 1)',      // Blue
+                  'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate
+                  ],
+                  borderColor: [
+                  'rgba(255, 223, 186, 1)',  // Light Orange
+                  'rgba(192, 236, 216, 1)',  // Light Green
+                  'rgba(255, 209, 220, 1)',  // Light Pink
+                  'rgba(173, 216, 230, 1)',  // Light Blue
+                  'rgba(255, 235, 205, 1)',  // Light Goldenrod Yellow
+                  'rgba(220, 220, 220, 1)',  // Light Gray
+                  'rgba(255, 140, 0, 1)',    // Light Orange (with more saturation)
+                  'rgba(173, 255, 47, 1)',   // Light Green (with more saturation)
+                  'rgba(255, 182, 193, 1)',  // Light Pink (with more saturation)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 69, 0, 1)',     // Red-Orange
+                  'rgba(152, 251, 152, 1)',  // Pale Green
+                  'rgba(255, 192, 203, 1)',  // Pink
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 105, 180, 1)',  // Hot Pink
+                  'rgba(144, 238, 144, 1)',  // Light Green (duplicate for variety)
+                  'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 20, 147, 1)',   // Deep Pink
+                  'rgba(0, 255, 127, 1)',    // Spring Green
+                  'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 0, 0, 1)',      // Red
+                  'rgba(0, 255, 0, 1)',      // Lime
+                  'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 165, 0, 1)',    // Orange
+                  'rgba(0, 128, 0, 1)',      // Green
+                  'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 255, 0, 1)',    // Yellow
+                  'rgba(0, 0, 255, 1)',      // Blue
+                  'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate
+                  ],
+                  borderWidth: 1
+              }]
+          },
+          options: {
+            indexAxis: 'y',
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      });
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var classification_data = {{ classification_data|tojson }};
+    var ctxPie = document.getElementById('classificationPieChart').getContext('2d');
+
+    var pieChart = new Chart(ctxPie, {
+      type: 'pie',
+      data: {
+        labels: Object.keys(classification_data),
+        datasets: [{
+          data: Object.values(classification_data),
+          backgroundColor: [
+            'rgba(255, 182, 193, 1)',  // Light Pink (with more saturation)
+            'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255, 182, 193, 1)',  // Light Pink (with more saturation)
+            'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+          ],
+          borderWidth: 1
+        }]
+      }
+    });
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var maintenance_cost = {{ maintenance_cost_data|tojson }};
+    var buying_price = {{ buying_price_data|tojson }};
+    var categories = Object.keys(maintenance_cost);
+
+    var ctxGroupedBar = document.getElementById('groupedBarChart').getContext('2d');
+
+    var groupedBarChart = new Chart(ctxGroupedBar, {
+      type: 'bar',
+      data: {
+        labels: categories,
+        datasets: [{
+          label: 'Maintenance Cost',
+          data: Object.values(maintenance_cost),
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        },
+        {
+          label: 'Buying Price',
+          data: Object.values(buying_price),
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  });
+</script>
+
+<script>
+  // Add this script to your HTML file
+  document.addEventListener('DOMContentLoaded', function () {
+      // Assume you have a list of companies and their corresponding counts
+      var num_doors = {{ num_doors_data|tojson }};
+      
+      // Get the canvas element
+      var ctx = document.getElementById('num_doorsChart').getContext('2d');
+
+      // Create a bar chart
+      var chart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: Object.keys(num_doors),
+              datasets: [{
+                  label: 'Numer of Doors Count',
+                  data: Object.values(num_doors),
+                  backgroundColor: [
+                  'rgba(255, 223, 186, 1)',  // Light Orange
+                  'rgba(192, 236, 216, 1)',  // Light Green
+                  'rgba(255, 209, 220, 1)',  // Light Pink
+                  'rgba(173, 216, 230, 1)',  // Light Blue
+                  'rgba(255, 235, 205, 1)',  // Light Goldenrod Yellow
+                  'rgba(220, 220, 220, 1)',  // Light Gray
+                  'rgba(255, 140, 0, 1)',    // Light Orange (with more saturation)
+                  'rgba(173, 255, 47, 1)',   // Light Green (with more saturation)
+                  'rgba(255, 182, 193, 1)',  // Light Pink (with more saturation)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 69, 0, 1)',     // Red-Orange
+                  'rgba(152, 251, 152, 1)',  // Pale Green
+                  'rgba(255, 192, 203, 1)',  // Pink
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 105, 180, 1)',  // Hot Pink
+                  'rgba(144, 238, 144, 1)',  // Light Green (duplicate for variety)
+                  'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 20, 147, 1)',   // Deep Pink
+                  'rgba(0, 255, 127, 1)',    // Spring Green
+                  'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 0, 0, 1)',      // Red
+                  'rgba(0, 255, 0, 1)',      // Lime
+                  'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 165, 0, 1)',    // Orange
+                  'rgba(0, 128, 0, 1)',      // Green
+                  'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 255, 0, 1)',    // Yellow
+                  'rgba(0, 0, 255, 1)',      // Blue
+                  'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate
+                  ],
+                  borderColor: [
+                  'rgba(255, 223, 186, 1)',  // Light Orange
+                  'rgba(192, 236, 216, 1)',  // Light Green
+                  'rgba(255, 209, 220, 1)',  // Light Pink
+                  'rgba(173, 216, 230, 1)',  // Light Blue
+                  'rgba(255, 235, 205, 1)',  // Light Goldenrod Yellow
+                  'rgba(220, 220, 220, 1)',  // Light Gray
+                  'rgba(255, 140, 0, 1)',    // Light Orange (with more saturation)
+                  'rgba(173, 255, 47, 1)',   // Light Green (with more saturation)
+                  'rgba(255, 182, 193, 1)',  // Light Pink (with more saturation)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 69, 0, 1)',     // Red-Orange
+                  'rgba(152, 251, 152, 1)',  // Pale Green
+                  'rgba(255, 192, 203, 1)',  // Pink
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 105, 180, 1)',  // Hot Pink
+                  'rgba(144, 238, 144, 1)',  // Light Green (duplicate for variety)
+                  'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 20, 147, 1)',   // Deep Pink
+                  'rgba(0, 255, 127, 1)',    // Spring Green
+                  'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 0, 0, 1)',      // Red
+                  'rgba(0, 255, 0, 1)',      // Lime
+                  'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 165, 0, 1)',    // Orange
+                  'rgba(0, 128, 0, 1)',      // Green
+                  'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 255, 0, 1)',    // Yellow
+                  'rgba(0, 0, 255, 1)',      // Blue
+                  'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate
+                  ],
+                  borderWidth: 1
+              }]
+          },
+          options: {
+            indexAxis: 'y',
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      });
+  });
+</script>
+
+<script>
+  // Add this script to your HTML file
+  document.addEventListener('DOMContentLoaded', function () {
+      // Assume you have a list of companies and their corresponding counts
+      var num_persons = {{ num_persons_data|tojson }};
+      
+      // Get the canvas element
+      var ctx = document.getElementById('num_personsChart').getContext('2d');
+
+      // Create a bar chart
+      var chart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: Object.keys(num_persons),
+              datasets: [{
+                  label: 'Number of Persons Count',
+                  data: Object.values(num_persons),
+                  backgroundColor: [
+                  'rgba(255, 223, 186, 1)',  // Light Orange
+                  'rgba(192, 236, 216, 1)',  // Light Green
+                  'rgba(255, 209, 220, 1)',  // Light Pink
+                  'rgba(173, 216, 230, 1)',  // Light Blue
+                  'rgba(255, 235, 205, 1)',  // Light Goldenrod Yellow
+                  'rgba(220, 220, 220, 1)',  // Light Gray
+                  'rgba(255, 140, 0, 1)',    // Light Orange (with more saturation)
+                  'rgba(173, 255, 47, 1)',   // Light Green (with more saturation)
+                  'rgba(255, 182, 193, 1)',  // Light Pink (with more saturation)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 69, 0, 1)',     // Red-Orange
+                  'rgba(152, 251, 152, 1)',  // Pale Green
+                  'rgba(255, 192, 203, 1)',  // Pink
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 105, 180, 1)',  // Hot Pink
+                  'rgba(144, 238, 144, 1)',  // Light Green (duplicate for variety)
+                  'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 20, 147, 1)',   // Deep Pink
+                  'rgba(0, 255, 127, 1)',    // Spring Green
+                  'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 0, 0, 1)',      // Red
+                  'rgba(0, 255, 0, 1)',      // Lime
+                  'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 165, 0, 1)',    // Orange
+                  'rgba(0, 128, 0, 1)',      // Green
+                  'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 255, 0, 1)',    // Yellow
+                  'rgba(0, 0, 255, 1)',      // Blue
+                  'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate
+                  ],
+                  borderColor: [
+                  'rgba(255, 223, 186, 1)',  // Light Orange
+                  'rgba(192, 236, 216, 1)',  // Light Green
+                  'rgba(255, 209, 220, 1)',  // Light Pink
+                  'rgba(173, 216, 230, 1)',  // Light Blue
+                  'rgba(255, 235, 205, 1)',  // Light Goldenrod Yellow
+                  'rgba(220, 220, 220, 1)',  // Light Gray
+                  'rgba(255, 140, 0, 1)',    // Light Orange (with more saturation)
+                  'rgba(173, 255, 47, 1)',   // Light Green (with more saturation)
+                  'rgba(255, 182, 193, 1)',  // Light Pink (with more saturation)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 69, 0, 1)',     // Red-Orange
+                  'rgba(152, 251, 152, 1)',  // Pale Green
+                  'rgba(255, 192, 203, 1)',  // Pink
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 105, 180, 1)',  // Hot Pink
+                  'rgba(144, 238, 144, 1)',  // Light Green (duplicate for variety)
+                  'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 20, 147, 1)',   // Deep Pink
+                  'rgba(0, 255, 127, 1)',    // Spring Green
+                  'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 0, 0, 1)',      // Red
+                  'rgba(0, 255, 0, 1)',      // Lime
+                  'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 165, 0, 1)',    // Orange
+                  'rgba(0, 128, 0, 1)',      // Green
+                  'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate for variety)
+                  'rgba(255, 255, 0, 1)',    // Yellow
+                  'rgba(0, 0, 255, 1)',      // Blue
+                  'rgba(255, 182, 193, 1)',  // Light Pink (duplicate for variety)
+                  'rgba(173, 216, 230, 1)',  // Light Blue (duplicate for variety)
+                  'rgba(250, 250, 210, 1)',  // Light Goldenrod Yellow (duplicate for variety)
+                  'rgba(211, 211, 211, 1)',  // Light Gray (duplicate
+                  ],
+                  borderWidth: 1
+              }]
+          },
+          options: {
+            indexAxis: 'y',
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      });
+  });
+</script>
 
 {% endblock %}

@@ -851,3 +851,14 @@ Unnamed: 0.1,Unnamed: 0,name,company,year,Price,kms_driven,fuel_type
 +,+,Mazda CT-04,Mazda,2017,2013241.0,31,Gasoline
 +,+,Mazda CT-05,Mazda,2017,2123122.0,2412,Gasoline
 +,+,Toyota Supra MK2,Toyota,2021,4232132.0,32,Gasoline
++,+,Toyota Rush 2.8,Toyota,2022,1423212.0,2421,Gasoline
++,+,Nissan Navarra,Nissan,2024,1370805.0,11234,Diesel
++,+,Jeep Wrangler Unlimited,Jeep,2024,1187672.0,421,Petrol
++,+,Mazda BT-50,Mazda,2024,1707238.0,3124,Petrol
++,+,Toyota Supra MK69,Toyota,2021,3421322.0,1,Gasoline
++,+,Toyota Hilux E,Toyota,2021,1342123.0,1,Diesel
++,+,Toyota  Avanza 1.0,Toyota,2023,1109221.0,1,Gasoline
++,+,Toyota Avanza E,Toyota,2021,1052332.0,1,Gasoline
++,+,Toyota Vios XE,Toyota ,2021,808123.0,1,Gasoline
++,+,Honda Civic R,Honda ,2021,3421221.0,1,Gasoline
++,+,Toyota Veloz,Toyota,2024,935975.0,1,Petrol

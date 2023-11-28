@@ -32,7 +32,7 @@ car=pd.read_csv('C:/Users/user/Desktop/Flask_VehiSense/writable_directory/Cleane
 
 # CLASSIFICATION CODE
 model2=joblib.load(open('C:/Users/user/Desktop/Flask_VehiSense/static/model/ClassificationModel.pkl','rb'))
-evaluation_car=pd.read_csv('C:/Users/user/Desktop/Flask_VehiSense/writable_directory/Cleaned_Car_data.csv')
+evaluation_car=pd.read_csv('C:/Users/user/Desktop/Flask_VehiSense/writable_directory/car_evaluation_classification.csv')
 
 @app.after_request
 def add_header(response):
@@ -44,7 +44,21 @@ def add_header(response):
 # APP ROUTES
 @app.route('/')
 def index():
-    return render_template("index.html")
+    cur = mysql.connection.cursor()
+    # Fetch count from car_price table
+    cur.execute("SELECT COUNT(*) FROM car_price")
+    car_price_count = cur.fetchone()[0]
+
+    cur.execute("SELECT COUNT(*) FROM car_evaluation WHERE classification = 0")
+    u_car_evaluation_count = cur.fetchone()[0]
+
+    cur.execute("SELECT COUNT(*) FROM car_evaluation WHERE classification = 1")
+    a_car_evaluation_count = cur.fetchone()[0]
+
+    cur.execute("SELECT COUNT(*) FROM gg_users")
+    user_count = cur.fetchone()[0]
+    
+    return render_template("index.html", car_price_count=car_price_count, a_car_evaluation_count=a_car_evaluation_count, u_car_evaluation_count=u_car_evaluation_count ,user_count=user_count)
 
 from flask import render_template, session
 import pymysql
@@ -90,8 +104,7 @@ def dashboard():
             # Handle the case where the user is not found in the database
             return render_template('dashboard.html', username=username, first_name=None, last_name=None, car_price_count=car_price_count, a_car_evaluation_count=a_car_evaluation_count, u_car_evaluation_count=u_car_evaluation_count, user_count=user_count)
     else:
-        return render_template('dashboard.html', username=None, first_name=None, last_name=None, car_price_count=car_price_count, a_car_evaluation_count=a_car_evaluation_count, u_car_evaluation_count=u_car_evaluation_count, user_count=user_count)
-
+        return render_template('index.html', username=None, first_name=None, last_name=None)    
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -152,7 +165,7 @@ def register():
 @app.route('/logout')
 def logout():
     session.pop('username', None)
-    return redirect(url_for('dashboard'))
+    return redirect(url_for('index'))
 
 # TRAIN MODEL
 @app.route('/train_model')
@@ -198,13 +211,18 @@ def train_model():
 @app.route('/reload_csv')
 def reload_csv():
     global car
+    global model
+    model=pickle.load(open('C:/Users/user/Desktop/Flask_VehiSense/static/model/RegressionModel.pkl','rb'))
     car = pd.read_csv('C:/Users/user/Desktop/Flask_VehiSense/writable_directory/Cleaned_Car_data.csv')
+
     return jsonify(success=True)
 
 @app.route('/reload_evaluation_csv')
 def reload_evaluation_csv():
     global evaluation_car
+    global model2
     evaluation_car = pd.read_csv('C:/Users/user/Desktop/Flask_VehiSense/writable_directory/car_evaluation_classification.csv')
+    model2=joblib.load(open('C:/Users/user/Desktop/Flask_VehiSense/static/model/ClassificationModel.pkl','rb'))
     return jsonify(success=True)
 
 # TRAIN REGRESSION MODEL
@@ -217,6 +235,7 @@ def train_price_model():
     from sklearn.linear_model import LinearRegression
     from sklearn.model_selection import train_test_split
 
+    car = pd.read_csv('C:/Users/user/Desktop/Flask_VehiSense/writable_directory/Cleaned_Car_data.csv')
     car['year']=car['year'].astype(int)
     X=car[['name','company','year','kms_driven','fuel_type']]
     y=car['Price']
@@ -467,7 +486,12 @@ def price_charts():
         cur = mysql.connection.cursor()
         cursor.execute("SELECT company, COUNT(*) as count FROM car_price GROUP BY company")
         company_data = dict(cursor.fetchall())
-        # Close the database connection
+        cursor.execute("SELECT year, COUNT(*) as count FROM car_price GROUP BY year")
+        year_data = dict(cursor.fetchall())
+        cursor.execute("SELECT fuel_type, COUNT(*) as count FROM car_price GROUP BY fuel_type")
+        fuel_type_data = dict(cursor.fetchall())
+        cursor.execute("SELECT transmission, COUNT(*) as count FROM car_price GROUP BY transmission")
+        transmission_data = dict(cursor.fetchall())
         cursor.close()
         conn.close()
 
@@ -476,17 +500,55 @@ def price_charts():
                 # If user_data is not None, it means the user was found in the database
                 first_name = user_data[0]
                 last_name = user_data[1]
-                return render_template("price_charts.html", company_data=company_data, username=username, first_name=first_name, last_name=last_name)
+                return render_template("price_charts.html", transmission_data = transmission_data, fuel_type_data = fuel_type_data, year_data = year_data, company_data=company_data, username=username, first_name=first_name, last_name=last_name)
         else:
                 # Handle the case where the user is not found in the database
-                return render_template("price_charts.html", company_data=company_data, username=username, first_name=None, last_name=None)
+                return render_template("price_charts.html", transmission_data = transmission_data, fuel_type_data = fuel_type_data, year_data = year_data, company_data=company_data, username=username, first_name=None, last_name=None)
     else:
         return render_template('dashboard.html', username=None, first_name=None, last_name=None)
 
 # EVALUATION CHARTS
 @app.route('/evaluation_charts')
 def evaluation_charts():
-    return render_template("evaluation_charts.html")
+    if 'username' in session:
+        username = session['username']
+
+        # Assuming you have a database connection
+        conn = pymysql.connect(host='localhost', user='root', password='', database='gulonggulo')
+        cursor = conn.cursor()
+
+        # Fetch user details from the gg_users table based on the username
+        cursor.execute("SELECT first_name, last_name FROM gg_users WHERE username = %s", (username,))
+        user_data = cursor.fetchone()
+
+        cur = mysql.connection.cursor()
+        cursor.execute("SELECT num_persons, COUNT(*) as count FROM car_evaluation GROUP BY num_persons")
+        num_persons_data = dict(cursor.fetchall())
+        cursor.execute("SELECT num_doors, COUNT(*) as count FROM car_evaluation GROUP BY num_doors")
+        num_doors_data = dict(cursor.fetchall())
+        cursor.execute("SELECT buying_price, COUNT(*) as count FROM car_evaluation GROUP BY buying_price")
+        buying_price_data = dict(cursor.fetchall())
+        cursor.execute("SELECT maintenance_cost, COUNT(*) as count FROM car_evaluation GROUP BY maintenance_cost")
+        maintenance_cost_data = dict(cursor.fetchall())
+        cursor.execute("SELECT classification, COUNT(*) as count FROM car_evaluation GROUP BY classification")
+        classification_data = dict(cursor.fetchall())
+        cursor.execute("SELECT lug_boot, COUNT(*) as count FROM car_evaluation GROUP BY lug_boot")
+        lug_boot_data = dict(cursor.fetchall())
+        cursor.close()
+        conn.close()
+
+
+        if user_data:
+                # If user_data is not None, it means the user was found in the database
+                first_name = user_data[0]
+                last_name = user_data[1]
+                return render_template("evaluation_charts.html", lug_boot_data = lug_boot_data, classification_data = classification_data, buying_price_data = buying_price_data, maintenance_cost_data = maintenance_cost_data, num_doors_data = num_doors_data, num_persons_data = num_persons_data, username=username, first_name=first_name, last_name=last_name)
+        else:
+                # Handle the case where the user is not found in the database
+                return render_template("evaluation_charts.html", lug_boot_data = lug_boot_data, classification_data = classification_data, buying_price_data = buying_price_data, maintenance_cost_data = maintenance_cost_data, num_doors_data = num_doors_data, num_persons_data = num_persons_data, username=username, first_name=None, last_name=None)
+    else:
+        return render_template('dashboard.html', username=None, first_name=None, last_name=None)
+
 
 # SAFETY TABLES
 @app.route('/safety_table')
@@ -919,7 +981,11 @@ def pricepredict():
         cursor.close()
         conn.close()
 
-        companies=sorted(car['company'].unique())
+        # Assuming you have a pandas DataFrame named 'car'
+        # Remove leading and trailing spaces from the 'company' column
+        car['company'] = car['company'].str.strip()
+        # Get unique, sorted company names
+        companies = sorted(car['company'].unique())
         car_models=sorted(car['name'].unique())
         year=sorted(car['year'].unique(),reverse=True)
         fuel_type=car['fuel_type'].unique()
@@ -1031,7 +1097,49 @@ def add_price():
 
     return redirect(url_for('pricepredict'))
 
+# USER PRICE PREDICTOR
+@app.route('/user_pricepredict',methods=['GET','POST'])
+def user_pricepredict():
+    # Assuming you have a pandas DataFrame named 'car'
+    # Remove leading and trailing spaces from the 'company' column
+    car['company'] = car['company'].str.strip()
+    # Get unique, sorted company names
+    companies = sorted(car['company'].unique())
+    car_models=sorted(car['name'].unique())
+    year=sorted(car['year'].unique(),reverse=True)
+    fuel_type=car['fuel_type'].unique()
 
+    companies.insert(0,'Select Company')
+
+    return render_template('user_pricepredict.html',companies=companies, car_models=car_models, years=year,fuel_types=fuel_type)
+
+@app.route('/user_predict', methods=['POST'])
+@cross_origin()
+def user_predict():
+        companies = sorted(car['company'].unique())
+        car_models = sorted(car['name'].unique())
+        year = sorted(car['year'].unique(), reverse=True)
+        fuel_type = car['fuel_type'].unique()
+
+        companies.insert(0, 'Select Company')
+
+        company = request.form.get('company')
+        car_model = request.form.get('car_models')
+        year_input = request.form.get('year')
+        fuel_type_input = request.form.get('fuel_type')
+        driven = request.form.get('kilo_driven')
+        transmission = request.form.get('transmission')
+
+        prediction = model.predict(pd.DataFrame(columns=['name', 'company', 'year', 'kms_driven', 'fuel_type'], data=np.array([car_model, company, year_input, driven, fuel_type_input]).reshape(1, 5)))
+        print(prediction)
+
+
+        
+        return render_template("pricepredict.html", rounded_prediction=str(np.round(prediction[0], 2)),
+                            companies=companies, car_models=car_models, years=year, fuel_types=fuel_type,
+                            selected_company=company, selected_car_model=car_model, selected_transmission = transmission,
+                            selected_year=year_input, selected_fuel_type=fuel_type_input, mileage=driven)
+        
 
 if __name__=='__main__':
     app.run(debug=True)

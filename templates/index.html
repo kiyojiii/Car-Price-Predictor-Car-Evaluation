@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>GulongGulo</title>
+  <title>GuPa</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -42,7 +42,7 @@
     <div class="container d-flex align-items-center">
 
       <div class="logo me-auto">
-        <h1><a href="index.html">Lumia</a></h1>
+        <h1><a href="{{ url_for('index') }}">GuPa</a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
       </div>
@@ -54,33 +54,28 @@
           <li><a class="nav-link scrollto" href="#services">Services</a></li>
           <li><a class="nav-link scrollto " href="#portfolio">Portfolio</a></li>
           <li><a class="nav-link scrollto" href="#testimonials">Testimonials</a></li>
-          <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
+          <li class="dropdown"><a href="#"><span>Predictor</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
-              <li><a href="#">Drop Down 1</a></li>
-              <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
-                <ul>
-                  <li><a href="#">Deep Drop Down 1</a></li>
-                  <li><a href="#">Deep Drop Down 2</a></li>
-                  <li><a href="#">Deep Drop Down 3</a></li>
-                  <li><a href="#">Deep Drop Down 4</a></li>
-                  <li><a href="#">Deep Drop Down 5</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Drop Down 2</a></li>
-              <li><a href="#">Drop Down 3</a></li>
-              <li><a href="#">Drop Down 4</a></li>
+              <li><a href="{{ url_for('user_pricepredict')}}">Car Price Predictor</a></li>
+              <li><a href="{{ url_for('evaluatepredict')}}">Car Evaluation Predictor</a></li>
             </ul>
           </li>
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+          <li class="dropdown"><a href="#"><span>User</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="{{ url_for('login')}}">Login</a></li>
+              <li><a href="{{ url_for('register')}}">Register</a></li>
+            </ul>
+          </li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
 
       <div class="header-social-links d-flex align-items-center">
-        <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-        <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
+        <a href="https://twitter.com/Clinttoott" target="_blank" class="twitter"><i class="bi bi-twitter"></i></a>
+        <a href="https://www.facebook.com/Kiyojiii/" target="_blank" class="facebook"><i class="bi bi-facebook"></i></a>
+        <a href="https://github.com/kiyojiii" target="_blank" class="instagram"><i class="bi bi-github"></i></a>
+        <a href="https://www.linkedin.com/in/clint-joshua-velasquez-6b2976265/" target="_blank" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
       </div>
 
     </div>
@@ -89,8 +84,8 @@
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="d-flex flex-column justify-content-center align-items-center">
     <div class="container text-center text-md-left" data-aos="fade-up">
-      <h1>Welcome to <span>Lumia</span></h1>
-      <h2>We are team of talented designers making websites with Bootstrap</h2>
+      <h1>Welcome to <span>GuPa</span></h1>
+      <h2>GuPa is a web application that helps users predict their car price and can help determine their car safety evaluation</h2>
       <a href="#about" class="btn-get-started scrollto">Get Started</a>
     </div>
   </section><!-- End Hero -->
@@ -102,34 +97,36 @@
       <div class="container">
 
         <div class="section-title">
-          <h2>What We Do</h2>
-          <p>Magnam dolores commodi suscipit consequatur ex aliquid</p>
+          <h2>What GuPa Does</h2>
+          <p>Explore how GuPa leverages advanced data models for accurate car price and safety evaluation predictions.</p>
         </div>
-
+        
         <div class="row">
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
             <div class="icon-box">
               <div class="icon"><i class="bx bxl-dribbble"></i></div>
-              <h4><a href="">Lorem Ipsum</a></h4>
-              <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
+              <h4><a href="">Car Price Predict</a></h4>
+              <p>Experience accurate predictions for car prices based on extensive data analysis and machine learning models.</p>
             </div>
           </div>
-
+        
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
             <div class="icon-box">
               <div class="icon"><i class="bx bx-file"></i></div>
-              <h4><a href="">Sed ut perspiciatis</a></h4>
-              <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+              <h4><a href="">Safety Evaluation Predict</a></h4>
+              <p>Gain insights into car safety evaluations through predictive models that consider various factors and data points.</p>
             </div>
           </div>
-
+        
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0">
             <div class="icon-box">
               <div class="icon"><i class="bx bx-tachometer"></i></div>
-              <h4><a href="">Magni Dolores</a></h4>
-              <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
+              <h4><a href="">Data-Driven Accuracy</a></h4>
+              <p>Experience the power of data-driven accuracy, providing valuable information for informed decision-making.</p>
             </div>
           </div>
+        </div>
+        
 
         </div>
 
@@ -139,37 +136,39 @@
     <!-- ======= About Section ======= -->
     <section id="about" class="about">
       <div class="container">
-
+    
         <div class="row">
           <div class="col-lg-6">
-            <img src="assets/img/about.jpg" class="img-fluid" alt="">
+            <img src="{{ url_for('static', filename='assets/img/favicon.png') }}" class="img-fluid" alt="GuPa About Us" style="height: 400px; width: 400px; justify-content: center;">
           </div>
           <div class="col-lg-6 pt-4 pt-lg-0">
-            <h3>About Us</h3>
+            <h3>About GuPa</h3>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              Welcome to GuPa (Gulong ng Palad), your destination for cutting-edge car price and safety evaluation predictions. We are dedicated to providing valuable insights and predictions to empower your car-related decisions.
             </p>
             <ul>
-              <li><i class="bx bx-check-double"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
-              <li><i class="bx bx-check-double"></i> Duis aute irure dolor in reprehenderit in voluptate velit.</li>
+              <li><i class="bx bx-check-double"></i> Experience accurate predictions based on extensive data analysis.</li>
+              <li><i class="bx bx-check-double"></i> Our models consider various factors to provide reliable safety evaluations.</li>
             </ul>
             <div class="row icon-boxes">
               <div class="col-md-6">
                 <i class="bx bx-receipt"></i>
-                <h4>Corporis voluptates sit</h4>
-                <p>Consequuntur sunt aut quasi enim aliquam quae harum pariatur laboris nisi ut aliquip</p>
+                <h4>Data-Driven Insights</h4>
+                <p>Discover the power of data-driven insights for informed decision-making in the automotive world.</p>
               </div>
               <div class="col-md-6 mt-4 mt-md-0">
                 <i class="bx bx-cube-alt"></i>
-                <h4>Ullamco laboris nisi</h4>
-                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt</p>
+                <h4>Accurate Predictions</h4>
+                <p>Our predictive models strive for accuracy, providing you with reliable car price and safety predictions.</p>
               </div>
             </div>
           </div>
         </div>
-
+    
       </div>
-    </section><!-- End About Section -->
+    </section>
+    
+    <!-- End About Section -->
 
     <!-- ======= Skills Section ======= -->
     <section id="skills" class="skills">
@@ -178,18 +177,18 @@
         <div class="row skills-content">
 
           <div class="col-lg-6">
-
+            <h4>Language Structure of GuPa:</h4>
             <div class="progress">
-              <span class="skill">HTML <i class="val">100%</i></span>
+              <span class="skill">Python <i class="val">75%</i></span>
               <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="75"></div>
               </div>
             </div>
 
             <div class="progress">
-              <span class="skill">CSS <i class="val">90%</i></span>
+              <span class="skill">CSS <i class="val">5.3%</i></span>
               <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar" role="progressbar" aria-valuenow="5.3" aria-valuemin="0" aria-valuemax="5.3"></div>
               </div>
             </div>
 
@@ -203,25 +202,25 @@
           </div>
 
           <div class="col-lg-6">
-
+            <h4>Others:</h4>
             <div class="progress">
-              <span class="skill">PHP <i class="val">80%</i></span>
+              <span class="skill">Cython <i class="val">2.5%</i></span>
               <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar" role="progressbar" aria-valuenow="2.55" aria-valuemin="0" aria-valuemax="2.5"></div>
               </div>
             </div>
 
             <div class="progress">
-              <span class="skill">WordPress/CMS <i class="val">90%</i></span>
+              <span class="skill">Jupyter Notebook <i class="val">1.6%</i></span>
               <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar" role="progressbar" aria-valuenow="1.6" aria-valuemin="0" aria-valuemax="1.6"></div>
               </div>
             </div>
 
             <div class="progress">
-              <span class="skill">Photoshop <i class="val">55%</i></span>
+              <span class="skill">C <i class="val">0.9%</i></span>
               <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar" role="progressbar" aria-valuenow="0.9" aria-valuemin="0" aria-valuemax="0.9"></div>
               </div>
             </div>
 
@@ -240,100 +239,103 @@
 
           <div class="col-lg-3 col-6">
             <div class="count-box">
-              <i class="bi bi-emoji-smile"></i>
-              <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Happy Clients</p>
+              <i class='bx bx-money'></i>
+              <span data-purecounter-start="0" data-purecounter-end="{{ car_price_count }}" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Car Prices Predicted</p>
             </div>
           </div>
 
           <div class="col-lg-3 col-6">
             <div class="count-box">
-              <i class="bi bi-journal-richtext"></i>
-              <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Projects</p>
+              <i class='bx bxs-check-square'></i>
+              <span data-purecounter-start="0" data-purecounter-end="{{ a_car_evaluation_count }}" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Car Accepted Evaluation</p>
             </div>
           </div>
 
           <div class="col-lg-3 col-6 mt-5 mt-lg-0">
             <div class="count-box">
-              <i class="bi bi-headset"></i>
-              <span data-purecounter-start="0" data-purecounter-end="1463" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Hours Of Support</p>
+              <i class='bx bxs-x-square'></i>
+              <span data-purecounter-start="0" data-purecounter-end="{{ u_car_evaluation_count }}" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Car Unaccepted Evaluation</p>
             </div>
           </div>
 
           <div class="col-lg-3 col-6 mt-5 mt-lg-0">
             <div class="count-box">
               <i class="bi bi-people"></i>
-              <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Hard Workers</p>
+              <span data-purecounter-start="0" data-purecounter-end="{{ user_count }}" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Users</p>
             </div>
           </div>
 
         </div>
 
       </div>
-    </section><!-- End Counts Section -->
+    </section>
+    <!-- End Counts Section -->
 
     <!-- ======= Services Section ======= -->
     <section id="services" class="services section-bg">
       <div class="container">
-
+    
         <div class="section-title">
           <h2>Services</h2>
-          <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem</p>
+          <p>Explore the features and services we offer for accurate car price and safety evaluation predictions.</p>
         </div>
-
+    
         <div class="row">
           <div class="col-md-6">
             <div class="icon-box">
-              <i class="bi bi-briefcase"></i>
-              <h4><a href="#">Lorem Ipsum</a></h4>
-              <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
+              <i class="bi bi-graph-up"></i>
+              <h4><a href="#">Car Price Prediction</a></h4>
+              <p>Get insights into car pricing trends and predictions based on advanced machine learning models.</p>
             </div>
           </div>
           <div class="col-md-6 mt-4 mt-lg-0">
             <div class="icon-box">
-              <i class="bi bi-card-checklist"></i>
-              <h4><a href="#">Dolor Sitema</a></h4>
-              <p>Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tarad limino ata</p>
+              <i class="bi bi-shield-check"></i>
+              <h4><a href="#">Safety Evaluation</a></h4>
+              <p>Assess the safety features of a car with our advanced evaluation system, ensuring your safety on the road.</p>
             </div>
           </div>
           <div class="col-md-6 mt-4">
             <div class="icon-box">
               <i class="bi bi-bar-chart"></i>
-              <h4><a href="#">Sed ut perspiciatis</a></h4>
-              <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</p>
+              <h4><a href="#">Data Analysis</a></h4>
+              <p>Utilize powerful data analysis tools to make informed decisions about car purchases and safety.</p>
             </div>
           </div>
           <div class="col-md-6 mt-4">
             <div class="icon-box">
-              <i class="bi bi-binoculars"></i>
-              <h4><a href="#">Nemo Enim</a></h4>
-              <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+              <i class="bi bi-search"></i>
+              <h4><a href="#">Explore Features</a></h4>
+              <p>Discover and explore various features of cars, making it easier to find the perfect match for your needs.</p>
             </div>
           </div>
           <div class="col-md-6 mt-4">
             <div class="icon-box">
-              <i class="bi bi-brightness-high"></i>
-              <h4><a href="#">Magni Dolore</a></h4>
-              <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque</p>
+              <i class="bi bi-file-earmark-text"></i>
+              <h4><a href="#">Documentation</a></h4>
+              <p>Access comprehensive documentation and information about our prediction models and evaluation criteria.</p>
             </div>
           </div>
           <div class="col-md-6 mt-4">
             <div class="icon-box">
-              <i class="bi bi-calendar4-week"></i>
-              <h4><a href="#">Eiusmod Tempor</a></h4>
-              <p>Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi</p>
+              <i class="bi bi-chat-dots"></i>
+              <h4><a href="#">Customer Support</a></h4>
+              <p>Reach out to our dedicated support team for any assistance or inquiries related to our services.</p>
             </div>
           </div>
         </div>
-
+    
       </div>
-    </section><!-- End Services Section -->
+    </section>
+
+    <!-- End Services Section -->
 
     <!-- ======= Portfolio Section ======= -->
-    <section id="portfolio" class="portfolio">
+    <!-- <section id="portfolio" class="portfolio">
       <div class="container">
 
         <div class="section-title">
@@ -492,7 +494,8 @@
         </div>
 
       </div>
-    </section><!-- End Portfolio Section -->
+    </section> -->
+    <!-- End Portfolio Section -->
 
     <!-- ======= Testimonials Section ======= -->
     <section id="testimonials" class="testimonials section-bg">
@@ -500,7 +503,7 @@
 
         <div class="section-title">
           <h2>Testimonials</h2>
-          <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem</p>
+          <p>Take a look at the testimonials of our loyal users.</p>
         </div>
 
         <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
@@ -510,7 +513,7 @@
               <div class="testimonial-item">
                 <p>
                   <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
+                  The car price predictions were spot-on, and the safety evaluations provided valuable insights. GuPa made my car buying experience smooth and informed.
                   <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                 </p>
                 <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
@@ -523,7 +526,7 @@
               <div class="testimonial-item">
                 <p>
                   <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.
+                  The safety evaluation feature helped me choose a car that prioritizes my well-being. GuPa's services exceeded my expectations.
                   <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                 </p>
                 <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
@@ -536,7 +539,7 @@
               <div class="testimonial-item">
                 <p>
                   <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.
+                  GuPa's data analysis tools are powerful and user-friendly. I was able to make informed decisions about my car purchase.
                   <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                 </p>
                 <img src="assets/img/testimonials/testimonials-3.jpg" class="testimonial-img" alt="">
@@ -549,27 +552,29 @@
               <div class="testimonial-item">
                 <p>
                   <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.
+                  "I'm amazed by the car price predictions and safety evaluations from GuPa. The results were spot-on, and the platform is user-friendly. Kudos to the team for their exceptional work!"
                   <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                 </p>
                 <img src="assets/img/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
                 <h3>Matt Brandon</h3>
                 <h4>Freelancer</h4>
               </div>
-            </div><!-- End testimonial item -->
+            </div>
+            <!-- End testimonial item -->
 
             <div class="swiper-slide">
               <div class="testimonial-item">
                 <p>
                   <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.
+                  "Incredible service! The team at GuPa provided accurate predictions and valuable insights. Their dedication to excellence truly sets them apart in the industry."
                   <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                 </p>
                 <img src="assets/img/testimonials/testimonials-5.jpg" class="testimonial-img" alt="">
                 <h3>John Larson</h3>
                 <h4>Entrepreneur</h4>
               </div>
-            </div><!-- End testimonial item -->
+            </div>
+            <!-- End testimonial item -->
 
           </div>
           <div class="swiper-pagination"></div>
@@ -607,17 +612,17 @@
 
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
             <div class="member">
-              <img src="assets/img/team/team-2.jpg" alt="">
-              <h4>Sarah Jhinson</h4>
-              <span>Product Manager</span>
+              <img src="assets/img/team/team-1.jpg" alt="">
+              <h4>Clint Joshua O. Velasquez</h4>
+              <span>Chief Executive Officer</span>
               <p>
-                Repellat fugiat adipisci nemo illum nesciunt voluptas repellendus. In architecto rerum rerum temporibus
+                No Matter Where You Go, There You Are
               </p>
               <div class="social">
-                <a href=""><i class="bi bi-twitter"></i></a>
-                <a href=""><i class="bi bi-facebook"></i></a>
-                <a href=""><i class="bi bi-instagram"></i></a>
-                <a href=""><i class="bi bi-linkedin"></i></a>
+                <a href="https://twitter.com/Clinttoott" target="_blank" class="twitter"><i class="bi bi-twitter"></i></a>
+                <a href="https://www.facebook.com/Kiyojiii/" target="_blank" class="facebook"><i class="bi bi-facebook"></i></a>
+                <a href="https://github.com/kiyojiii" target="_blank" class="instagram"><i class="bi bi-github"></i></a>
+                <a href="https://www.linkedin.com/in/clint-joshua-velasquez-6b2976265/" target="_blank" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
               </div>
             </div>
           </div>
@@ -642,7 +647,8 @@
         </div>
 
       </div>
-    </section><!-- End Team Section -->
+    </section>
+    <!-- End Team Section -->
 
     <!-- ======= Contact Section ======= -->
     <section id="contact" class="contact section-bg">
@@ -650,7 +656,7 @@
 
         <div class="section-title">
           <h2>Contact</h2>
-          <p>Magnam dolores commodi suscipit eius consequatur ex aliquid fuga</p>
+          <p>If you have any questions, you can contact the developers.</p>
         </div>
 
         <div class="row mt-5 justify-content-center">
@@ -662,13 +668,13 @@
                 <div class="col-lg-4 info">
                   <i class="bi bi-geo-alt"></i>
                   <h4>Location:</h4>
-                  <p>A108 Adam Street<br>New York, NY 535022</p>
+                  <p> Stutzli 460, Lauterbrunnen <br> 3822 Switzerland</p>
                 </div>
 
                 <div class="col-lg-4 info mt-4 mt-lg-0">
                   <i class="bi bi-envelope"></i>
                   <h4>Email:</h4>
-                  <p>info@example.com<br>contact@example.com</p>
+                  <p>clintjoshuagarcia@gmail.com<br></p>
                 </div>
 
                 <div class="col-lg-4 info mt-4 mt-lg-0">
@@ -685,7 +691,7 @@
 
         <div class="row mt-5 justify-content-center">
           <div class="col-lg-10">
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+            <form action="" method="post" role="form" class="php-email-form">
               <div class="row">
                 <div class="col-md-6 form-group">
                   <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
@@ -702,7 +708,7 @@
               </div>
               <div class="my-3">
                 <div class="loading">Loading</div>
-                <div class="error-message"></div>
+                <div class="error-message">Your message has been sent. Thank you!</div>
                 <div class="sent-message">Your message has been sent. Thank you!</div>
               </div>
               <div class="text-center"><button type="submit">Send Message</button></div>
@@ -724,41 +730,35 @@
         <div class="row">
 
           <div class="col-lg-3 col-md-6 footer-contact">
-            <h3>Lumia</h3>
+            <h3>GuPa</h3>
             <p>
-              A108 Adam Street <br>
-              New York, NY 535022<br>
-              United States <br><br>
+              Stutzli 460, Lauterbrunnen<br>
+              3822 Switzerland <br>
               <strong>Phone:</strong> +1 5589 55488 55<br>
-              <strong>Email:</strong> info@example.com<br>
+              <strong>Email:</strong> clintjoshuagarcia@gmail.com<br>
             </p>
           </div>
 
           <div class="col-lg-2 col-md-6 footer-links">
             <h4>Useful Links</h4>
             <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#Home">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#About">About us</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#Services">Services</a></li>
             </ul>
           </div>
 
           <div class="col-lg-3 col-md-6 footer-links">
             <h4>Our Services</h4>
             <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{{ url_for('user_pricepredict')}}">Car Price Predict</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#carevaluationprediction">Car Evaluation Predict</a></li>
             </ul>
           </div>
 
           <div class="col-lg-4 col-md-6 footer-newsletter">
             <h4>Join Our Newsletter</h4>
-            <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
+            <p>Keep Updated to GuPa with the latest and new updates for the website.</p>
             <form action="" method="post">
               <input type="email" name="email"><input type="submit" value="Subscribe">
             </form>
@@ -772,22 +772,21 @@
 
       <div class="me-md-auto text-center text-md-start">
         <div class="copyright">
-          &copy; Copyright <strong><span>Lumia</span></strong>. All Rights Reserved
+          &copy; Copyright <strong><span>GuPa</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
           <!-- All the links in the footer should remain intact. -->
           <!-- You can delete the links only if you purchased the pro version. -->
           <!-- Licensing information: https://bootstrapmade.com/license/ -->
           <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/lumia-bootstrap-business-template/ -->
-          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+          Designed by <a href="https://bootstrapmade.com/">CJV</a>
         </div>
       </div>
       <div class="social-links text-center text-md-right pt-3 pt-md-0">
-        <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-        <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-        <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-        <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-        <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+        <a href="https://twitter.com/Clinttoott" target="_blank" class="twitter"><i class="bi bi-twitter"></i></a>
+        <a href="https://www.facebook.com/Kiyojiii/" target="_blank" class="facebook"><i class="bi bi-facebook"></i></a>
+        <a href="https://github.com/kiyojiii" target="_blank" class="instagram"><i class="bi bi-github"></i></a>
+        <a href="https://www.linkedin.com/in/clint-joshua-velasquez-6b2976265/" target="_blank" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
       </div>
     </div>
   </footer><!-- End Footer -->
@@ -806,6 +805,27 @@
   <!-- Template Main JS File -->
   <script src="{{ url_for('static',filename='assets/js/main.js') }}"></script>
 
-</body>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('addToDatabasePriceBtn').addEventListener('click', function () {
+            showSuccessAlert();
+        });
+  
+        function showSuccessAlert() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'The results have been added to the database.',
+            });
+        }
+    });
+  </script>
+  
+  <script>
+    function showSuccessMessage() {
+        alert("Data has been successfully added to the database!");
+    }
+  </script>
 
+</body>
 </html>

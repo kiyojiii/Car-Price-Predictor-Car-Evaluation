@@ -261,7 +261,7 @@
                         <div class="card-header">
                             <h3 class="card-title">Results</h3>
                         </div>
-                        <form action="{{ url_for('add_to_database') }}" method="POST">
+                        <form action="{{ url_for('add_to_database') }}" method="POST" onsubmit="showSuccessMessage()">
                             {% if prediction_text %}
 
                             <div class="card-body">
@@ -368,24 +368,9 @@
                             </div>
                             {% endif %}
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary" id="addToDatabaseBtn">Add To Database</button>
+                                <button type="submit" class="btn btn-primary" id="addToDatabaseEvaluateBtn">Add To Database</button>
                             </div>
-                        </form>
-                        <script>
-                            document.addEventListener('DOMContentLoaded', function () {
-                                document.getElementById('addToDatabaseBtn').addEventListener('click', function () {
-                                    showSuccessAlert();
-                                });
-                        
-                                function showSuccessAlert() {
-                                    Swal.fire({
-                                        icon: 'success',
-                                        title: 'Success!',
-                                        text: 'The results have been added to the database.',
-                                    });
-                                }
-                            });
-                        </script>
+                        </form>                     
                     </div>
                 </div>
                 <!--/.col (right) -->
@@ -397,4 +382,25 @@
 </div>
 <!-- /.content-wrapper -->
 
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('addToDatabaseEvaluateBtn').addEventListener('click', function () {
+          showSuccessAlert();
+      });
+
+      function showSuccessAlert() {
+          Swal.fire({
+              icon: 'success',
+              title: 'Success!',
+              text: 'The results have been added to the database.',
+          });
+      }
+  });
+</script>
+
+<script>
+  function showSuccessMessage() {
+      alert("Data has been successfully added to the database!");
+  }
+</script>
 {% endblock %}

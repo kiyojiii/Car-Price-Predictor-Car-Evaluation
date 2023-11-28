@@ -228,6 +228,16 @@
                             <br>
                             <div class="row align-items-center">
                                 <div class="col-md-4">
+                                    <button class="btn btn-success" id="reload-btn">Reload Model</button>
+                                </div>
+                                <div>
+                                    <span id="success-message" style="color: rgb(0, 255, 0); margin-left: 10px;"></span>
+                                    <span id="error-message" style="color: red; margin-left: 10px;"></span>
+                                </div>                          
+                            </div>
+                            <br>
+                            <div class="row align-items-center">
+                                <div class="col-md-4">
                                     <form id="reset-price-model-form" action="{{ url_for('reset_price_model') }}" method="post">
                                         <button type="submit" class="btn btn-danger" id="reset-price-model-btn">Reset Model</button>
                                     </form>
@@ -244,17 +254,7 @@
                                 <div id="success-prompt-reset-price-model" style="display: none;" class="text-success">
                                     <p id="r2score-text2">Model Reset successful! R2_Score: <span id="r2score-value2"></span></p>
                                 </div>
-                            </div>
-                            <br>
-                            <div class="row align-items-center">
-                                <div class="col-md-4">
-                                    <button class="btn btn-success" id="reload-btn">Reload CSV</button>
-                                </div>
-                                <div>
-                                    <span id="success-message" style="color: rgb(0, 255, 0); margin-left: 10px;"></span>
-                                    <span id="error-message" style="color: red; margin-left: 10px;"></span>
-                                </div>                          
-                            </div>
+                            </div>              
                         </div> 
                     </div>                                         
                     <!-- /.card -->
@@ -322,6 +322,16 @@
                                     <div id="success-prompt" style="display: none;" class="text-success">
                                         <p id="accuracy-text">Model trained successfully! Accuracy: <span id="accuracy-value"></span>%</p>
                                     </div>
+                            </div>                    
+                            <br>
+                            <div class="row align-items-center">
+                                <div class="col-md-4">
+                                    <button class="btn btn-success" id="reload-evaluation-btn">Reload CSV</button>
+                                </div>
+                                <div>
+                                    <span id="success-message2" style="color: rgb(0, 255, 0); margin-left: 10px;"></span>
+                                    <span id="error-message2" style="color: red; margin-left: 10px;"></span>
+                                </div>                          
                             </div>
                             <br>
                             <div class="row align-items-center">
@@ -343,19 +353,29 @@
                                     <p id="accuracy-text2">Model Reset successful! Accuracy: <span id="accuracy-value2"></span>%</p>
                                 </div>
                             </div>
-                            <br>
-                            <div class="row align-items-center">
-                                <div class="col-md-4">
-                                    <button class="btn btn-success" id="reload-evaluation-btn">Reload CSV</button>
-                                </div>
-                                <div>
-                                    <span id="success-message2" style="color: rgb(0, 255, 0); margin-left: 10px;"></span>
-                                    <span id="error-message2" style="color: red; margin-left: 10px;"></span>
-                                </div>                          
-                            </div>
                         </div> 
                     </div>
                 </div>
+                <div class="col-md-6 mx-auto">
+                    <!-- Form Element sizes -->
+                    <!-- general form elements -->
+                    <div class="card card-primary text-center">
+                        <div class="card-header">
+                            <h3 class="card-title">Train Regression</h3>
+                        </div>
+                        <div>
+                            <div><br>
+                                <h5> Note: </h5>
+                                <p>Steps to successfully train the model: <br>
+                                    1. Train Model<br>
+                                    2. Reload Model<br> 
+                                    If Model is having an error, consider: <br>
+                                    3. Reset Model - Resets the model back to the original model<br>
+                                </p>   
+                            </div>                
+                        </div>
+                    </div>
+                </div>                
                 <!--/.col (right) -->
             </div>
             <!-- /.row -->

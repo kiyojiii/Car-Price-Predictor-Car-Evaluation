@@ -164,7 +164,7 @@
                         <div class="card-header">
                             <h2 class="card-title">Edit Existing Car Evaluation</h2>
                         </div>
-                        <form method="post">
+                        <form method="post" onsubmit="showSuccessMessage()">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-lg-6">
@@ -272,5 +272,27 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('addToDatabasePriceBtn').addEventListener('click', function () {
+          showSuccessAlert();
+      });
+
+      function showSuccessAlert() {
+          Swal.fire({
+              icon: 'success',
+              title: 'Success!',
+              text: 'Data has been Updated',
+          });
+      }
+  });
+</script>
+
+<script>
+  function showSuccessMessage() {
+      alert("Data has been successfully Updated");
+  }
+</script>
 
 {% endblock %}

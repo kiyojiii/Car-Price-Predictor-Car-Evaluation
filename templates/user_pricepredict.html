@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% block body %}
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
@@ -48,7 +50,7 @@
                 </a>
             </li>
           <li class="nav-item">
-            <a href="{{ url_for('pricepredict') }}" class="nav-link">
+            <a href="{{ url_for('pricepredict') }}" class="nav-link active">
               <i class="nav-icon fa-solid fa-peso-sign"></i>
               <p>
                 Car Price Predictor
@@ -63,7 +65,7 @@
               </p>
             </a>
           </li>
-          <li class="nav-item menu-open">
+          <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fa-solid fa-table"></i>
               <p>
@@ -74,7 +76,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ url_for('price_table') }}" class="nav-link active">
+                <a href="{{ url_for('price_table') }}" class="nav-link">
                   <i class="nav-icon fa-solid fa-car"></i>
                   <p>Car Price Tables</p>
                 </a>
@@ -132,7 +134,7 @@
     </div>
     <!-- /.sidebar -->
   </aside>
-
+  
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -146,7 +148,6 @@
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item active">Car Price Predictor</li>
-                        <li class="breadcrumb-item active">Add Car Price</li>
                     </ol>
                 </div>
             </div>
@@ -162,9 +163,10 @@
                     <!-- general form elements -->
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Add Existing Car Price</h3>
+                            <h3 class="card-title">Car Details</h3>
+                            <button class="btn btn-success float-right" id="reload-btn" >Reload CSV</button>
                         </div>
-                        <form action="add_existing_car_price" method="post" accept-charset="utf-8" name="Modelform" onsubmit="showSuccessMessage()">
+                        <form action="{{ url_for('user_predict')}}" method="post" accept-charset="utf-8" name="Modelform">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6">
@@ -216,21 +218,20 @@
                     
                                         <div class="form-group mb-3">
                                             <label><b>Mileage (Kilometers): </b> </label><br>
-                                            <input type="number" class="form-control" id="mileage" name="mileage" placeholder="Enter the kilometres driven " required>
-                                        </div>
-
-                                        <div class="text-center">
-                                            <label><b>Price (P): </b> </label><br>
-                                            <input type="number" class="form-control" id="price" name="price" placeholder="Enter the Price " required>
+                                            <input type="text" class="form-control" id="kilo_driven" name="kilo_driven" placeholder="Enter the kilometres driven " required>
                                         </div>
 
                                     </div>
 
                                 </div>
-                            </div>             
+                            </div>
+                            <div class="text-center">
+                                <h4>Note:</h4>
+                                <h5>If Price Predicted is <span style="color: red;">Negative</span>, Consider Making Your Own Price</h5>
+                            </div>
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary" id="addToDatabasePriceBtn">Add Car Price</button>
+                                <button type="submit" class="btn btn-primary" onclick="send_data()">Predict Price</button>
                             </div>
                         </form>
                     </div>                                         
@@ -275,7 +276,7 @@
                         
                                 var xhr= new XMLHttpRequest({mozSystem: true});
                         
-                                xhr.open('POST','/predict',true);
+                                xhr.open('POST','/user_predict',true);
                                 document.getElementById('prediction').innerHTML="Wait! Predicting Price.....";
                                 xhr.onreadystatechange = function(){
                                     if(xhr.readyState == XMLHttpRequest.DONE){
@@ -299,61 +300,61 @@
                     <!-- general form elements -->
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Add New Car Price</h3>
+                            <h3 class="card-title">Price Predicted</h3>
+                            <a href="{{ url_for('dashboard')}}" class="btn btn-danger float-right">Back</a>
                         </div>
-                        <form action="add_new_car_price" method="post" onsubmit="showSuccessMessage2()">
+                        <form action="{{ url_for('add_price') }}" method="POST" onsubmit="showSuccessMessage()">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="company">Brand</label>
-                                            <input type="text" class="form-control" id="company" name="company" placeholder="Enter the Brand" required>
+                                            <input type="text" class="form-control" id="company" name="company" value="{{ selected_company }}" readonly>
                                         </div>
-                                 
-                                              
+                                        
+                                                                                                  
                                         <div class="form-group">
                                             <label for="model">Model</label>
-                                            <input type="text" class="form-control" id="model" name="model" placeholder="Enter the Model" required>
-                                        </div>     
+                                            <input type="text" class="form-control" id="model" name="model" value="{{ selected_car_model   }}" readonly>
+                                        </div>
+                                        
 
-                                               
                                         <div class="form-group">
-                                            <label for="year">Year</label>
-                                            <input type="text" class="form-control" id="year" name="year" placeholder="Enter Model Year" required>
+                                            <label for="transmission">Transmission</label>
+                                            <input type="text" class="form-control" id="transmission" name="transmission" value="{{ selected_transmission }}" readonly>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="year">Year</label>
+                                            <input type="text" class="form-control" id="year" name="year" value="{{ selected_year  }}" readonly>
+                                        </div>
 
                                         <div class="form-group">
                                             <label for="fuel_type">Fuel Type</label>
-                                            <input type="text" class="form-control" id="fuel_type" name="fuel_type" placeholder="Enter the Fuel Type" required>
-                                        </div>
-                                                                                  
-                                        <div class="form-group">
-                                            <label for="transmission">Transmission</label>
-                                            <input type="text" class="form-control" id="transmission" name="transmission" placeholder="Enter the Transmission" required>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="mileage">Mileage (Kilometers)</label>
-                                            <input type="text" class="form-control" id="mileage" name="mileage" placeholder="Enter the Mileage" required>
+                                            <input type="text" class="form-control" id="fuel_type" name="fuel_type" value="{{ selected_fuel_type  }}" readonly>
                                         </div>
                                         
 
-                                        <div class="text-center">
-                                            <label><b>Price (P): </b> </label><br>
-                                            <input type="number" class="form-control" id="price" name="price" placeholder="Enter the Price" required>
+                                        <div class="form-group">
+                                            <label for="mileage">Mileage (Kilometers)</label>
+                                            <input type="text" class="form-control" id="mileage" name="mileage" value="{{ mileage }}" readonly>
                                         </div>
-
+                                        
+                                        <!-- Add a hidden input for prediction_text -->
+                                        <input type="hidden" name="rounded_prediction" value="{{ rounded_prediction }}">
                                     </div>
                                 </div>
                             </div>
                             <!-- /.card-body -->
+                            <div class="text-center">
+                                <h4>The Car Predicted Costs  :</h4>
+                                <h5>P {{ rounded_prediction }}</h5>
+                            </div>
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary" id="addToDatabasePrice2Btn">Add New Car Price</button>
-                                <a href="{{ url_for('price_table')}}" class="btn btn-danger float-right">Back</a>
+                                <button type="submit" class="btn btn-primary" id="addToDatabasePriceBtn">Add To Database</button>
                             </div>
                         </form>
                     </div>
@@ -361,7 +362,8 @@
                 <!--/.col (right) -->
             </div>
             <!-- /.row -->
-        </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
 </div>
@@ -390,25 +392,18 @@
 </script>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-      document.getElementById('addToDatabasePrice2Btn').addEventListener('click', function () {
-          showSuccessAlert();
-      });
-
-      function showSuccessAlert() {
-          Swal.fire({
-              icon: 'success',
-              title: 'Success!',
-              text: 'The results have been added to the database.',
-          });
-      }
-  });
+    $(document).ready(function() {
+        $("#reload-btn").click(function() {
+            // Make an AJAX request to the reload endpoint
+            $.get("/reload_csv", function(data) {
+                if (data.success) {
+                    // On success, reload the page
+                    location.reload();
+                } else {
+                    alert("Failed to reload CSV");
+                }
+            });
+        });
+    });
 </script>
-
-<script>
-  function showSuccessMessage2() {
-      alert("Data has been successfully added to the database!");
-  }
-</script>
-
 {% endblock %}
