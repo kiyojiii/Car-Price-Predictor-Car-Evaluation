@@ -862,10 +862,10 @@ Unnamed: 0.1,Unnamed: 0,name,company,year,Price,kms_driven,fuel_type
 +,+,Toyota Vios XE,Toyota ,2021,808123.0,1,Gasoline
 +,+,Honda Civic R,Honda ,2021,3421221.0,1,Gasoline
 +,+,Toyota Veloz,Toyota,2024,935975.0,1,Petrol
-+,+,Fiat Linea Emotion,Fiat,2024,735039.0,1,Petrol
-+,+,Fiat Linea Emotion,Fiat,2024,735015.0,32,Petrol
-+,+,Nissan Micra XL,Nissan,2024,1087773.0,21,Petrol
-+,+,Mazda BT-50,Mazda,2024,1921450.0,1,Petrol
-+,+,Toyota  Avanza 1.0,Toyota,2022,1682210.0,321,Gasoline
-+,+,BMW 3 Series,BMW,2024,3214233.0,1,Petrol
-+,+,Toyota Avanza G,Toyota,2023,1109321.0,1,Gasoline
++,+,Fiat Linea Emotion,Fiat,2024,735039,1,Petrol
++,+,Fiat Linea Emotion,Fiat,2024,735015,32,Petrol
++,+,Nissan Micra XL,Nissan,2024,1087773,21,Petrol
++,+,Mazda BT-50,Mazda,2024,1921450,1,Petrol
++,+,Toyota  Avanza 1.0,Toyota,2022,1682210,321,Gasoline
++,+,BMW 3 Series,BMW,2024,3214233,1,Petrol
++,+,Toyota Avanza G,Toyota,2023,1109321,1,Gasoline

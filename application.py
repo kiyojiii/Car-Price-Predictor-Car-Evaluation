@@ -1128,18 +1128,95 @@ def user_predict():
         year_input = request.form.get('year')
         fuel_type_input = request.form.get('fuel_type')
         driven = request.form.get('kilo_driven')
-        transmission = request.form.get('transmission')
+        transmission = request.form.get('transmission') 
 
         prediction = model.predict(pd.DataFrame(columns=['name', 'company', 'year', 'kms_driven', 'fuel_type'], data=np.array([car_model, company, year_input, driven, fuel_type_input]).reshape(1, 5)))
         print(prediction)
 
-
-        
-        return render_template("pricepredict.html", rounded_prediction=str(np.round(prediction[0], 2)),
+        return render_template("user_pricepredict.html", rounded_prediction=str(np.round(prediction[0], 2)),
                             companies=companies, car_models=car_models, years=year, fuel_types=fuel_type,
                             selected_company=company, selected_car_model=car_model, selected_transmission = transmission,
                             selected_year=year_input, selected_fuel_type=fuel_type_input, mileage=driven)
-        
+    
+@app.route('/user_add_price', methods=['GET','POST'])
+def user_add_price():
+        company = request.form['company']
+        model = request.form['model']
+        transmission = request.form['transmission']
+        year = request.form['year']
+        fuel_type = request.form['fuel_type']
+        mileage = request.form['mileage']
+        price = int(float(request.form['rounded_prediction']))
+
+        cur = mysql.connection.cursor()
+        # Create a new CarData instance
+        cur.execute("INSERT INTO car_price (company, name, transmission, year, fuel_type, kms_driven, Price) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+                    (company, model, transmission, year, fuel_type, mileage, price))
+        mysql.connection.commit()
+
+        # SAVE DATA TO CSV
+        csv_directory = os.path.join(os.getcwd(), 'writable_directory')
+
+        # Ensure the directory exists
+        os.makedirs(csv_directory, exist_ok=True)
+
+        # Append the CSV file path
+        csv_file_path = os.path.join(csv_directory, 'Cleaned_Car_data.csv')
+
+        # Open the CSV file in append mode
+        with open(csv_file_path, 'a', newline='') as csv_file:
+            csv_writer = csv.writer(csv_file)
+            csv_writer.writerow(['+', '+', model, company, year, price, mileage, fuel_type])
+
+        return redirect(url_for('user_pricepredict'))
+
+#USER CAR EVALUATION
+@app.route("/user_evaluate_predict")
+def user_evaluate_predict():
+    return render_template("user_predictevaluate.html")
+
+
+@app.route("/user_evaluate", methods=['POST'])
+def user_evaluate():
+        float_features = [float(x) for x in request.form.values()]
+        features = [np.array(float_features)]
+        prediction = int(model2.predict(features)[0])
+
+        return render_template("user_predictevaluate.html", prediction_text=f"{prediction}")
+      
+# ADD CAR EVALUATOR RESULTS TO DATABASE
+@app.route('/user_add_to_database', methods=['GET','POST'])
+def user_add_to_database():
+    if request.method == 'POST':
+        buying_price = request.form['buying_price']
+        maintenance_cost = request.form['maintenance_cost']
+        num_doors = request.form['num_doors']
+        num_persons = request.form['num_persons']
+        lug_boot = request.form['lug_boot']
+        safety = request.form['safety']
+        prediction = request.form['prediction_text'].strip('[]')
+
+        # SAVE DATA TO CSV
+        csv_directory = os.path.join(os.getcwd(), 'writable_directory')
+
+        # Ensure the directory exists
+        os.makedirs(csv_directory, exist_ok=True)
+
+        # Append the CSV file path
+        csv_file_path = os.path.join(csv_directory, 'car_evaluation_classification.csv')
+
+        # Open the CSV file in append mode
+        with open(csv_file_path, 'a', newline='') as csv_file:
+            csv_writer = csv.writer(csv_file)
+            csv_writer.writerow([buying_price, maintenance_cost, num_doors, num_persons, lug_boot, safety, prediction])
+   
+        cur = mysql.connection.cursor()
+        # Create a new CarData instance
+        cur.execute("INSERT INTO car_evaluation (buying_price, maintenance_cost, num_doors, num_persons, lug_boot, safety, classification) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+                    (buying_price, maintenance_cost, num_doors, num_persons, lug_boot, safety, prediction))
+        mysql.connection.commit()
+
+    return redirect(url_for('user_evaluate_predict'))
 
 if __name__=='__main__':
     app.run(debug=True)

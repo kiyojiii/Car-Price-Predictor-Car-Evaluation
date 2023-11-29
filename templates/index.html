@@ -50,16 +50,15 @@
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
           <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-          <li><a class="nav-link scrollto" href="#about">About</a></li>
-          <li><a class="nav-link scrollto" href="#services">Services</a></li>
-          <li><a class="nav-link scrollto " href="#portfolio">Portfolio</a></li>
-          <li><a class="nav-link scrollto" href="#testimonials">Testimonials</a></li>
           <li class="dropdown"><a href="#"><span>Predictor</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="{{ url_for('user_pricepredict')}}">Car Price Predictor</a></li>
-              <li><a href="{{ url_for('evaluatepredict')}}">Car Evaluation Predictor</a></li>
+              <li><a href="{{ url_for('user_evaluate_predict')}}">Car Evaluation Predictor</a></li>
             </ul>
           </li>
+          <li><a class="nav-link scrollto" href="#about">About</a></li>
+          <li><a class="nav-link scrollto" href="#services">Services</a></li>
+          <li><a class="nav-link scrollto" href="#testimonials">Testimonials</a></li>
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
           <li class="dropdown"><a href="#"><span>User</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
@@ -589,17 +588,17 @@
 
         <div class="section-title">
           <h2>Team</h2>
-          <p>Sit sint consectetur velit quos quisquam cupiditate nemo qui</p>
+          <p>The Team responsible for Developing GuPa</p>
         </div>
 
         <div class="row">
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
             <div class="member">
-              <img src="assets/img/team/team-1.jpg" alt="">
-              <h4>Walter White</h4>
-              <span>Chief Executive Officer</span>
+              <img src="{{ url_for('static',filename='assets/img/c1.png') }}" alt="">
+              <h4>Pusang Orange</h4>
+              <span>Back-End Developer</span>
               <p>
-                Magni qui quod omnis unde et eos fuga et exercitationem. Odio veritatis perspiciatis quaerat qui aut aut aut
+                So this is me swallowing my pride, Standing in front of you saying I'm sorry for that night
               </p>
               <div class="social">
                 <a href=""><i class="bi bi-twitter"></i></a>
@@ -612,11 +611,11 @@
 
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
             <div class="member">
-              <img src="assets/img/team/team-1.jpg" alt="">
-              <h4>Clint Joshua O. Velasquez</h4>
+              <img src="{{ url_for('static',filename='assets/img/me.png') }}" alt="">
+              <h4>Clint Joshua Velasquez</h4>
               <span>Chief Executive Officer</span>
               <p>
-                No Matter Where You Go, There You Are
+                And I go back to December all the time, It turns out freedom ain't nothing but missing you
               </p>
               <div class="social">
                 <a href="https://twitter.com/Clinttoott" target="_blank" class="twitter"><i class="bi bi-twitter"></i></a>
@@ -629,11 +628,11 @@
 
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
             <div class="member">
-              <img src="assets/img/team/team-3.jpg" alt="">
-              <h4>William Anderson</h4>
-              <span>CTO</span>
+              <img src="{{ url_for('static',filename='assets/img/c6.jpg') }}" alt="">
+              <h4>Pusang Galit</h4>
+              <span>Front-End Developer</span>
               <p>
-                Voluptas necessitatibus occaecati quia. Earum totam consequuntur qui porro et laborum toro des clara
+                Wishing I'd realized what I had when you were mine, I'd go back to December, turn around and make it all right, I go back to December all the time
               </p>
               <div class="social">
                 <a href=""><i class="bi bi-twitter"></i></a>
@@ -752,7 +751,7 @@
             <h4>Our Services</h4>
             <ul>
               <li><i class="bx bx-chevron-right"></i> <a href="{{ url_for('user_pricepredict')}}">Car Price Predict</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#carevaluationprediction">Car Evaluation Predict</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{{ url_for('user_evaluate_predict') }}">Car Evaluation Predict</a></li>
             </ul>
           </div>
 

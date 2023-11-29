@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base2.html" %}
 {% block body %}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -14,43 +14,19 @@
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="{{ url_for('static', filename='assets/img/user.png') }}" class="img-circle elevation-2"
-              alt="User Image" style="width: 40px; height: 40px;">
-        </div>    
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">    
         <div class="info">
-          <h5>&nbsp;&nbsp;{{ first_name }} {{ last_name }}</h5>
+            <h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You are a Guest</h5>
         </div>
       </div>
-  
-      <!-- SidebarSearch Form -->
-      <div class="form-inline">
-        <div class="input-group" data-widget="sidebar-search">
-          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-sidebar">
-              <i class="fas fa-search fa-fw"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-  
+
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-                <a href="{{ url_for('dashboard') }}" class="nav-link">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
-                <p>
-                  Dashboard
-                </p>
-                </a>
-            </li>
-          <li class="nav-item">
-            <a href="{{ url_for('pricepredict') }}" class="nav-link active">
+            <a href="{{ url_for('user_pricepredict') }}" class="nav-link active">
               <i class="nav-icon fa-solid fa-peso-sign"></i>
               <p>
                 Car Price Predictor
@@ -58,74 +34,10 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ url_for('evaluatepredict') }}" class="nav-link">
+            <a href="{{ url_for('user_evaluate_predict') }}" class="nav-link">
               <i class="nav-icon fa-regular fa-circle-check"></i>
               <p>
                 Car Evaluator
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fa-solid fa-table"></i>
-              <p>
-                Tables
-                <i class="fas fa-angle-left right"></i>
-                <!-- <span class="badge badge-info right">6</span> -->
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{ url_for('price_table') }}" class="nav-link">
-                  <i class="nav-icon fa-solid fa-car"></i>
-                  <p>Car Price Tables</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ url_for('safety_table') }}" class="nav-link">
-                  <i class="nav-icon fa-solid fa-list-check"></i>
-                  <p>Car Evaluation Tables</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a href="{{ url_for('train_model') }}" class="nav-link">
-              <i class="nav-icon fa-solid fa-dumbbell"></i>
-              <p>
-                Train Model
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fa-solid fa-chart-pie"></i>
-              <p>
-                Charts
-                <i class="fas fa-angle-left right"></i>
-                <!-- <span class="badge badge-info right">6</span> -->
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{ url_for('price_charts') }}" class="nav-link">
-                  <i class="nav-icon fa-solid fa-chart-simple"></i>
-                  <p>Car Price Charts</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ url_for('evaluation_charts') }}" class="nav-link">
-                  <i class="nav-icon fa-solid fa-chart-area"></i>
-                  <p>Car Evaluation Charts</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a href="{{ url_for('logout') }}" class="nav-link">
-                <i class=" nav-icon fa-solid fa-right-from-bracket"></i>
-              <p>
-                Logout
               </p>
             </a>
           </li>
@@ -146,7 +58,6 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item active">Car Price Predictor</li>
                     </ol>
                 </div>
@@ -238,10 +149,7 @@
                     <!-- /.card -->
 
                 </div>
-
-
                         <script>
-
                             function load_car_models(company_id,car_model_id)
                             {
                                 var company=document.getElementById(company_id);
@@ -268,7 +176,7 @@
                             function form_handler(event) {
                                 event.preventDefault(); // Don't submit the form normally
                             }
-                            function send_data()
+                            function send_data2()
                             {
                                 document.querySelector('form').addEventListener("submit",form_handler);
                         
@@ -301,9 +209,9 @@
                     <div class="card card-primary">
                         <div class="card-header">
                             <h3 class="card-title">Price Predicted</h3>
-                            <a href="{{ url_for('dashboard')}}" class="btn btn-danger float-right">Back</a>
+                            <a href="{{ url_for('index')}}" class="btn btn-danger float-right">Back</a>
                         </div>
-                        <form action="{{ url_for('add_price') }}" method="POST" onsubmit="showSuccessMessage()">
+                        <form action="{{ url_for('user_add_price') }}" method="POST" onsubmit="showSuccessMessage()">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-lg-6">
