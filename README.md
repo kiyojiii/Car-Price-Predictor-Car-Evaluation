@@ -2,7 +2,7 @@
 
 Demo Video: https://youtu.be/NvxaxwPf3Uk
 
-<img src="https://github.com/kiyojiii/Car-Price-Predictor-Car-Evaluation/demo.png">
+<img src="https://github.com/kiyojiii/Car-Price-Predictor-Car-Evaluation/blob/main/new_demo.png">
 
 
 # Aim
