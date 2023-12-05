@@ -2,8 +2,7 @@
 
 Demo Video: https://youtu.be/NvxaxwPf3Uk
 
-<img src="https://github.com/kiyojiii/Car-Price-Predictor-Car-Evaluation/blob/master/demo.png">
-
+<img src="https://github.com/kiyojiii/Car-Price-Predictor-Car-Evaluation/blob/main/demo.png">
 
 
 # Aim
@@ -37,17 +36,22 @@ And you are good to go.
 
 <img src="https://github.com/kiyojiii/Car-Price-Predictor-Car-Evaluation/blob/master/predicted.png">
 
+1. This project takes the parameters of a car like: Buying Price, Maintenance Cost, No. of Doors, No. of Persons, Lug_Boot, Estimated Safety evaluation.
+2. It then predicts the possible safety evaluation of the car. For example, the image below shows the predicted safety evaluation with the estimated car details. 
+
+<img src="https://github.com/kiyojiii/Car-Price-Predictor-Car-Evaluation/blob/master/evaluated.png">
+
 ## How this project does?
 
 1. First of all the data was downloaded from kaggle (https://kaggle.com) 
-Link for data: https://github.com/kiyojiii/Car-Price-Predictor-Car-Evaluation/blob/master/quikr_car.csv
+Link for data: https://github.com/kiyojiii/Car-Price-Predictor-Car-Evaluation/blob/master/quikr_car.csv <br>
 Link for data: https://github.com/kiyojiii/Car-Price-Predictor-Car-Evaluation/blob/master/car_eval.csv
 
-2. The data was cleaned (it was super unclean :( ) and analysed.
+2. The data was cleaned (it was super unclean ) and analysed.
 
 3. Then a Linear Regression model was built on top of it which had 0.92 R2_score, Then for the Classification Model Forest Algorithm to achieve an accuracy of 99.422%
 
-Link for notebook: https://github.com/kiyojiii/Car-Price-Predictor-Car-Evaluation/blob/master/Quikr%20Analysis.ipynb
+Link for notebook: https://github.com/kiyojiii/Car-Price-Predictor-Car-Evaluation/blob/master/Quikr%20Analysis.ipynb <br>
 Link for notebook: https://github.com/kiyojiii/Car-Price-Predictor-Car-Evaluation/blob/master/Classification%20Analysis.ipynb
 
 4. This project was given the form of an website built on Flask where we used the Linear Regression model and Classification Model with Random Forest Algorithm to perform predictions.
