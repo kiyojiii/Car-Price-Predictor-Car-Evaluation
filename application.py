@@ -91,18 +91,57 @@ def dashboard():
         cur.execute("SELECT COUNT(*) FROM car_evaluation WHERE classification = 1")
         a_car_evaluation_count = cur.fetchone()[0]
 
+        cur.execute("SELECT COUNT(*) FROM car_evaluation")
+        car_evaluation_count = cur.fetchone()[0]
 
         cur.execute("SELECT COUNT(*) FROM gg_users")
         user_count = cur.fetchone()[0]
+
+        cur.execute("SELECT SUM(Price) FROM car_price")
+        car_price_sum = cur.fetchone()[0]
+        formatted_price_sum = "{:,}".format(car_price_sum)
+
+        cur.execute("SELECT SUM(kms_driven) FROM car_price")
+        mileage_sum = cur.fetchone()[0]
+        formatted_mileage_sum = "{:,}".format(mileage_sum)
+
+        # Execute the SQL query to find the price of the car with the highest price
+        cur.execute("SELECT Price FROM car_price ORDER BY CAST(Price AS INTEGER) DESC LIMIT 1")
+        highest_price_result = cur.fetchone()
+
+        # Extract the numeric value from the result
+        if highest_price_result:
+            highest_price = int(highest_price_result[0])
+            formatted_price = "{:,}".format(highest_price)
+            print("Price of the car with the highest price:", formatted_price)
+        else:
+            print("No cars found in the database.")
+
+        # Execute the SQL query to find the price of the car with the highest price
+        cur.execute("SELECT Price FROM car_price ORDER BY CAST(Price AS INTEGER) ASC LIMIT 1")
+        lowest_price_result = cur.fetchone()
+
+        # Extract the numeric value from the result
+        if lowest_price_result:
+            highest_price = int(lowest_price_result[0])
+            low_formatted_price = "{:,}".format(highest_price)
+            print("Price of the car with the highest price:", low_formatted_price)
+        else:
+            print("No cars found in the database.")
+
+        u_percentage = (u_car_evaluation_count / car_evaluation_count) * 100
+        a_percentage = (a_car_evaluation_count / car_evaluation_count) * 100
+        car_price_percentage = (car_price_count / car_evaluation_count) * 100
+        user_percentage = (user_count / car_evaluation_count) * 100
 
         if user_data:
             # If user_data is not None, it means the user was found in the database
             first_name = user_data[0]
             last_name = user_data[1]
-            return render_template('dashboard.html', username=username, first_name=first_name, last_name=last_name, car_price_count=car_price_count, a_car_evaluation_count=a_car_evaluation_count, u_car_evaluation_count=u_car_evaluation_count ,user_count=user_count)
+            return render_template('dashboard.html', low_formatted_price = low_formatted_price, formatted_price_sum = formatted_price_sum, formatted_mileage_sum = formatted_mileage_sum, formatted_price = formatted_price, user_percentage = user_percentage, car_price_percentage = car_price_percentage, highest_price = highest_price, mileage_sum = mileage_sum, car_price_sum = car_price_sum, a_percentage = a_percentage, u_percentage = u_percentage, car_evaluation_count = car_evaluation_count, username=username, first_name=first_name, last_name=last_name, car_price_count=car_price_count, a_car_evaluation_count=a_car_evaluation_count, u_car_evaluation_count=u_car_evaluation_count ,user_count=user_count)
         else:
             # Handle the case where the user is not found in the database
-            return render_template('dashboard.html', username=username, first_name=None, last_name=None, car_price_count=car_price_count, a_car_evaluation_count=a_car_evaluation_count, u_car_evaluation_count=u_car_evaluation_count, user_count=user_count)
+            return render_template('dashboard.html', low_formatted_price = low_formatted_price, formatted_price_sum = formatted_price_sum, formatted_mileage_sum = formatted_mileage_sum, formatted_price = formatted_price, user_percentage = user_percentage, car_price_percentage = car_price_percentage, highest_price = highest_price, mileage_sum = mileage_sum, car_price_sum = car_price_sum, a_percentage = a_percentage, u_percentage = u_percentage, car_evaluation_count = car_evaluation_count, username=username, first_name=None, last_name=None, car_price_count=car_price_count, a_car_evaluation_count=a_car_evaluation_count, u_car_evaluation_count=u_car_evaluation_count, user_count=user_count)
     else:
         return render_template('index.html', username=None, first_name=None, last_name=None)    
 

@@ -869,3 +869,7 @@ Unnamed: 0.1,Unnamed: 0,name,company,year,Price,kms_driven,fuel_type
 +,+,Toyota  Avanza 1.0,Toyota,2022,1682210.0,321,Gasoline
 +,+,BMW 3 Series,BMW,2024,3214233.0,1,Petrol
 +,+,Toyota Avanza G,Toyota,2023,1109321.0,1,Gasoline
++,+,Fiat Linea Emotion,Fiat,2024,679993.0,323,Petrol
++,+,Datsun GO T,Datsun,2024,783606.0,2,Petrol
++,+,Land Rover Freelander,Land,2024,1132323.0,232,Petrol
++,+,Toyota Tundra,Toyota,2023,4500000.0,12,Diesel

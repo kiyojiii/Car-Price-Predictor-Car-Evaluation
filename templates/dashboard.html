@@ -198,7 +198,7 @@
 
             <div class="info-box-content">
               <span class="info-box-text">Unccepted Car Evaluation</span>
-              <span class="info-box-number">{{ u_car_evaluation_count }} </span>
+              <span class="info-box-number">{{ u_car_evaluation_count }}</span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -253,7 +253,7 @@
               <div class="row">
                 <div class="col-md-8">
                   <p class="text-center">
-                    <strong>Sales: 1 Jan, 2014 - 30 Jul, 2014</strong>
+                    <strong>Prediction: 1 Jan, 2023 - 30 Jul, 2023</strong>
                   </p>
 
                   <div class="chart">
@@ -265,41 +265,41 @@
                 <!-- /.col -->
                 <div class="col-md-4">
                   <p class="text-center">
-                    <strong>Goal Completion</strong>
+                    <strong>Car Price and Evaluation Percentage</strong>
                   </p>
 
                   <div class="progress-group">
-                    Add Products to Cart
-                    <span class="float-right"><b>160</b>/200</span>
+                    Car Price Count
+                    <span class="float-right"><b>{{ car_price_count }}</b></span>
                     <div class="progress progress-sm">
-                      <div class="progress-bar bg-primary" style="width: 80%"></div>
+                      <div class="progress-bar bg-primary" style="width: {{car_price_percentage}}%"></div>
                     </div>
                   </div>
                   <!-- /.progress-group -->
 
                   <div class="progress-group">
-                    Complete Purchase
-                    <span class="float-right"><b>310</b>/400</span>
+                    Unaccepted Car Evaluation
+                    <span class="float-right"><b>{{ u_car_evaluation_count }}</b>/{{ car_evaluation_count }}</span>
                     <div class="progress progress-sm">
-                      <div class="progress-bar bg-danger" style="width: 75%"></div>
+                      <div class="progress-bar bg-danger" style="width: {{ u_percentage }}%"></div>
                     </div>
                   </div>
 
                   <!-- /.progress-group -->
                   <div class="progress-group">
-                    <span class="progress-text">Visit Premium Page</span>
-                    <span class="float-right"><b>480</b>/800</span>
+                    <span class="progress-text">Accepted Car Evaluation</span>
+                    <span class="float-right"><b>{{ a_car_evaluation_count }}</b>/{{ car_evaluation_count }}</span>
                     <div class="progress progress-sm">
-                      <div class="progress-bar bg-success" style="width: 60%"></div>
+                      <div class="progress-bar bg-success" style="width: {{ a_percentage }}%"></div>
                     </div>
                   </div>
 
                   <!-- /.progress-group -->
                   <div class="progress-group">
-                    Send Inquiries
-                    <span class="float-right"><b>250</b>/500</span>
+                    Users
+                    <span class="float-right"><b>{{ user_count }}</b></span>
                     <div class="progress progress-sm">
-                      <div class="progress-bar bg-warning" style="width: 50%"></div>
+                      <div class="progress-bar bg-warning" style="width: {{user_percentage}}%"></div>
                     </div>
                   </div>
                   <!-- /.progress-group -->
@@ -314,8 +314,8 @@
                 <div class="col-sm-3 col-6">
                   <div class="description-block border-right">
                     <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 17%</span>
-                    <h5 class="description-header">$35,210.43</h5>
-                    <span class="description-text">TOTAL REVENUE</span>
+                    <h5 class="description-header">P {{ formatted_price_sum }}</h5>
+                    <span class="description-text">TOTAL CAR PRICE</span>
                   </div>
                   <!-- /.description-block -->
                 </div>
@@ -323,8 +323,8 @@
                 <div class="col-sm-3 col-6">
                   <div class="description-block border-right">
                     <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i> 0%</span>
-                    <h5 class="description-header">$10,390.90</h5>
-                    <span class="description-text">TOTAL COST</span>
+                    <h5 class="description-header">{{ formatted_mileage_sum }} KM</h5>
+                    <span class="description-text">TOTAL CAR MILEAGE</span>
                   </div>
                   <!-- /.description-block -->
                 </div>
@@ -332,8 +332,8 @@
                 <div class="col-sm-3 col-6">
                   <div class="description-block border-right">
                     <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 20%</span>
-                    <h5 class="description-header">$24,813.53</h5>
-                    <span class="description-text">TOTAL PROFIT</span>
+                    <h5 class="description-header">P {{ formatted_price }}</h5>
+                    <span class="description-text">HIGHEST CAR PRICE</span>
                   </div>
                   <!-- /.description-block -->
                 </div>
@@ -341,8 +341,8 @@
                 <div class="col-sm-3 col-6">
                   <div class="description-block">
                     <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i> 18%</span>
-                    <h5 class="description-header">1200</h5>
-                    <span class="description-text">GOAL COMPLETIONS</span>
+                    <h5 class="description-header">P {{ low_formatted_price }}</h5>
+                    <span class="description-text">LOWEST CAR PRICE</span>
                   </div>
                   <!-- /.description-block -->
                 </div>

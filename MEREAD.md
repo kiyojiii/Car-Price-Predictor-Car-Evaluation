@@ -1,22 +1,24 @@
 # Car Price Predictor
 
-Project link: https://car-price-price.herokuapp.com
-Demo Video: https://youtu.be/HEaFU68WAPM
+Demo Video: https://youtu.be/NvxaxwPf3Uk
 
-<img src="https://github.com/rajtilakls2510/car_price_predictor/blob/master/demo.png">
+<img src="https://github.com/kiyojiii/Car-Price-Predictor-Car-Evaluation/blob/master/demo.png">
 
 
 
 # Aim
 
 This project aims to predict the Price of an used Car by taking it's Company name, it's Model name, Year of Purchase, and other parameters.
+This project aims to predict the Saferty Evaluation of Car by taking it's Maintenance Cost, Buying Price, No. Of Doors, and other parameters.
 
-<img src="https://github.com/rajtilakls2510/car_price_predictor/blob/master/predict.png">
+<img src="https://github.com/kiyojiii/Car-Price-Predictor-Car-Evaluation/blob/master/predict.png">
+<img src="https://github.com/kiyojiii/Car-Price-Predictor-Car-Evaluation/blob/master/evaluation.png">
 
 ## How to use?
 
 1. Clone the repository
 2. Install the required packages in "requirements.txt" file.
+3. If "requirements.txt" file doesn't work, manually download the packages needed with the correct version.
 
 Some packages are:
  - numpy 

@@ -1765,3 +1765,9 @@ low,low,0,0,small,low,0
 med,high,1,2,big,med,0
 low,low,0,0,small,low,0
 low,low,0,0,small,low,0
+med,med,5,4,med,high,1
+low,low,0,0,small,low,0
+low,low,0,0,small,low,0
+low,low,0,0,small,low,1
+low,low,0,0,small,low,0
+low,low,0,0,small,low,0
