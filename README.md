@@ -1,6 +1,6 @@
 # Car Price Predictor
 
-Demo Video: https://youtu.be/NvxaxwPf3Uk
+Demo Video: https://youtu.be/t-HhG3EmjW4
 
 <img src="https://github.com/kiyojiii/Car-Price-Predictor-Car-Evaluation/blob/main/new_demo.png">
 
